@@ -1,0 +1,62 @@
+* {
+	font-family: 'Oswald', sans-serif;
+	font-weight: 300;
+}
+
+body {
+	background-color: #000;
+}
+
+h1, h2, h3, h4, h5, h6,
+.nav-link {
+	font-weight: 600;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+	color: #FFC107 !important;
+	text-decoration: underline;
+}
+
+.page-title,
+.spent {
+	color: #FFC107
+}
+
+.main {
+	min-height: 100%;
+	padding-bottom: 150px;
+}
+
+.form-card {
+	width: 500px;
+}
+
+.modal-content {
+	width: 600px;
+}
+
+.record-card {
+	width: 18.6rem;
+}
+
+.alert-card {
+	height: 50px;
+	width: 300px;
+	position: fixed;
+	top: 0;
+	left: 50%;
+    transform: translateX(-50%);
+}
+
+/**Adaptive cards with modal forms**/
+
+@media only screen and (max-width: 576px) {
+	.form-card {
+		width: 300px;
+	}
+
+	.modal-content {
+		width: 350px;
+	}
+}
