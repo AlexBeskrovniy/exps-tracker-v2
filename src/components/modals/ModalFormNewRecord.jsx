@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ModalFormNewRecord = () => {
+    const [categories, setCategories] = useState([{}]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/api/categories')
+            .then(res => res.json())
+            .then(data => setCategories(data))
+            .catch(err => console.error(err));
+    }, []);
+
     return (
         <div className="modal fade" id="modalFormNewRecord" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">
@@ -17,6 +26,9 @@ const ModalFormNewRecord = () => {
                                     <div className="form-floating mb-3">
                                         <select name="category" className="form-select" id="floatingSelect">
                                             <option value="">No category</option>
+                                            {categories.map((category, index) => (
+                                                <option key={index} value={category._id}>{category.name}</option>
+                                            ))}
                                         </select>
                                         <label htmlFor="floatingSelect">Choose a Category</label>
                                     </div>

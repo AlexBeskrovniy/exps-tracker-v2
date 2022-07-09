@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Main = () => {
+
+	const [chart, setChart] = useState("No Data...");
+
+	useEffect(() => {
+		fetch('http://localhost:3001/api/infochart')
+			.then(res => res.json())
+			.then(data => setChart(data))
+			.catch(err => console.error(err));
+	}, []);
+
     return (
         <main className="main">
 			<div className="container">
