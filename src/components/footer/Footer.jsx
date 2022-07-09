@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../details/Button.jsx';
+import Button from '../details/Button';
 
 
 const thisYear = new Date().getFullYear();

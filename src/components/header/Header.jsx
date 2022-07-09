@@ -1,8 +1,8 @@
 import React from 'react';
-import Logo from './Logo.jsx';
-import Nav from './Nav.jsx';
-import Total from './Total.jsx';
-import Button from '../details/Button.jsx';
+import Logo from './Logo';
+import Nav from './Nav';
+import Total from './Total';
+import Button from '../details/Button';
 
 const Header = () => {
     return (
