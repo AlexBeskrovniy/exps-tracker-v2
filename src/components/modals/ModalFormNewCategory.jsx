@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ModalFormNewCategory = () => {
     return (
         <div className="modal fade" id="modalFormNewCategory" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

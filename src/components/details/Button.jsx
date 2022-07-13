@@ -1,11 +1,17 @@
-import React from 'react';
+import { Button } from 'react-bootstrap';
 
-const Button = (props) => {
+const CreateButton = (props) => {
     return (
-        <button className={props.classes} data-bs-toggle={props.toggle} data-bs-target={props.modalId}>
+        <Button
+            variant={props.variant}
+            size={props.size}
+            className={props.classes}
+            data-bs-toggle={props.toggle}
+            data-bs-target={props.modalId}
+        >
             {props.title}
-        </button>
+        </Button>
     );
 }
 
-export default Button;
+export default CreateButton;

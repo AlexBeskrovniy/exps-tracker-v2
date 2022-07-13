@@ -1,8 +1,7 @@
-import React from 'react';
 import Logo from './Logo';
 import Nav from './Nav';
 import Total from './Total';
-import Button from '../details/Button';
+import CreateButton from '../details/Button';
 
 const Header = () => {
     return (
@@ -16,9 +15,11 @@ const Header = () => {
 
                     <Total />
 
-                    <Button
+                    <CreateButton
+                        variant="outline-warning"
+                        size="lg"
                         title = "Create Record"
-                        classes="btn btn-outline-warning btn-lg d-none d-lg-inline-block"
+                        classes="d-none d-lg-inline-block"
                         toggle="modal"
                         modalId="#modalFormNewRecord"
                     />

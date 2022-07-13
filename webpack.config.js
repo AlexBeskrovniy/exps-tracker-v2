@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
@@ -43,7 +44,9 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlugin({
             template: './src/index.html',
-
+        }),
+        new webpack.ProvidePlugin({
+            'React': 'react',
         })
     ],
 
@@ -51,5 +54,9 @@ module.exports = {
         historyApiFallback: true,
         open: true,
         hot: true
+    },
+
+    experiments: {
+        topLevelAwait: true
     }
 }
