@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 import { MainChart } from '../charts/MainChart';
 
 const Main = () => {
@@ -23,13 +24,13 @@ const Main = () => {
 	}, []);
 
     return (
-        <main className="main">
-			<div className="container">
+        <main className="main text-center">
+			<Container>
 				<div className="d-flex flex-wrap align-items-center justify-content-center my-3">
 					<h3 className="text-white text-uppercase mx-3 my-0">In this month:</h3>
 					<span data-spent className="spent fs-1">{monthSpents}</span>
 				</div>
-			</div>
+			</Container>
 			<div className="d-flex justify-content-center mx-auto" style={{maxWidth: '800px'}}>
 				<MainChart />
 			</div>

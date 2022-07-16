@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
+import ModalWrapper from '../modals/ModalWrapper';
+import CategoryForm from '../forms/CategoryForm';
+import CategoryCard from './CategoryCard';
 
 const Categories = () => {
 	const [categories, setCategories] = useState([]);
@@ -11,42 +15,34 @@ const Categories = () => {
 	}, []);
 
     return (
-        <main className="main">
-			<div className ="container">
+        <main className="main text-center">
+			<Container>
 				<div className="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-between py-5">
 					<h2 className="page-title mx-2 mb-0">List of the Categories</h2>
-					<a href="/form-create-category" className="btn btn-outline-warning btn-lg mt-3 mt-sm-0 ms-2" data-bs-toggle="modal" data-bs-target="#modalFormNewCategory">Create Category</a>
+					<ModalWrapper 
+						form={<CategoryForm type="Submit" />}
+						btnTitle="Create Category"
+						modalTitle="Create a new Category" 
+					/>
 				</div>
 
 				{categories.length ? (
 
-				<div id="categoryWrapper" className="d-flex row justify-content-start">
+				<Row id="categoryWrapper" className="d-flex justify-content-start">
 					{categories.map((category, index) => (
-						<div key={index} className="col-sm-6 col-lg-3 my-2 mx-0">
-							<div data-category-div className="card bg-dark">
-								<div className="card-header text-white">
-									<h3 data-category-name className="card-title text-white">
-										{category.name}
-									</h3>
-								</div>
-								<div className="card-body">
-									<h5 className="card-title text-white">Description</h5>
-									<p data-category-description className="card-text text-white">
-										{category.description}
-									</p>
-								</div>
-								<div className="card-footer row py-3">
-									<a data-edit-button href="#" className="btn btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#modalFormEditCategory">Edit</a>
-								</div>
-							</div>
-						</div>
+						<Col sm={6} lg={3} key={index} className="my-2 mx-0">
+							<CategoryCard 
+								categoryName={category.name}
+								categoryDescription={category.description} 
+							/>
+						</Col>
 					))}
-				</div>
+				</Row>
 
 				) : (
-					<span style={{ color: 'red' }}>Loading...</span> 		
+					<Spinner animation="border" variant="warning" className="position-absolute top-50 left-50" /> 		
 				)}
-			</div>	
+			</Container>	
 		</main>
     );
 }
