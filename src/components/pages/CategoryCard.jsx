@@ -1,6 +1,14 @@
-import { Row, Card, Button } from 'react-bootstrap';
+import { useState } from 'react';
+import { Row, Card } from 'react-bootstrap';
+import  ModalWrapper  from '../modals/ModalWrapper';
+import  CategoryForm  from '../forms/CategoryForm';
 
 const CategoryCard = (props) => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <Card bg="dark" text="white" data-category-div>
             <Card.Header>
@@ -16,13 +24,21 @@ const CategoryCard = (props) => {
             </Card.Body>
             <Card.Footer className="py-3">
                 <Row className="px-2">
-                    <Button
-                        variant="outline-warning"
-                        data-edit-button
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalFormEditCategory">
-                            Edit
-                    </Button>
+                    <ModalWrapper 
+						form={<CategoryForm 
+                            type="Edit" 
+                            dataName={ props.categoryName } 
+                            dataDescription={ props.categoryDescription }
+                            handleClose={handleClose}
+                            />}
+						btnTitle="Edit Category"
+                        btnVariant="warning"
+                        btnSize="md"
+						modalTitle="Edit this Category"
+                        show={show}
+                        handleShow={handleShow}
+                        handleClose={handleClose}
+					/>
                 </Row>
             </Card.Footer>
         </Card>

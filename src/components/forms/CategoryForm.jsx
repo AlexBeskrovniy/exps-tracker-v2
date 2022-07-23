@@ -1,9 +1,27 @@
 import { Row, Form, Button, FloatingLabel } from 'react-bootstrap';
+import { useRef } from 'react';
 
 const CategoryForm = (props) => {
-    return (
+    const nameRef = useRef();
+    const descriptionRef = useRef();
 
-        <Form type={props.type}>
+    const handleSubmit = () => {
+        const data = 
+        {
+            name: nameRef.current.value,
+            description: descriptionRef.current.value
+        }
+        console.log(data);
+        props.handleClose();
+    }
+
+    const handleDelete = () => {
+        console.log("Deleted");
+        props.handleClose();
+    }
+
+    return (
+        <>
             <FloatingLabel
                 controlId="floatingInput"
                 label="Name"
@@ -12,7 +30,9 @@ const CategoryForm = (props) => {
                 <Form.Control
                     type="text"
                     name="name"
-                    placeholder="New Category"
+                    placeholder="Name"
+                    ref={nameRef}
+                    defaultValue={props.dataName}
                     required
                 />
             </FloatingLabel>
@@ -25,18 +45,30 @@ const CategoryForm = (props) => {
                     as="textarea"
                     name="description"
                     placeholder="Description"
+                    ref={descriptionRef}
+                    defaultValue={props.dataDescription}
                 />
             </FloatingLabel>
-            <Row className="px-2">
+            <Row className="d-flex justify-content-between px-2">
                 <Button
                     variant="outline-warning"
                     size="lg"
-                    type="submit"
+                    onClick={handleSubmit}
                 >
                     {props.type}
                 </Button>
+               { props.type === "Edit" &&
+                    <Button
+                        variant="outline-warning"
+                        size="lg"
+                        className="mt-2"
+                        onClick={handleDelete}
+                >
+                        Delete
+                    </Button>
+                }
             </Row>
-        </Form>
+        </>
 
     );
 }

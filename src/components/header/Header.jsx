@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Logo from './Logo';
 import Nav from './Nav';
@@ -6,6 +7,11 @@ import ModalWrapper from '../modals/ModalWrapper';
 import RecordForm from '../forms/RecordForm';
 
 const Header = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <header className="p-3 bg-dark text-white">
             <Container>
@@ -18,9 +24,14 @@ const Header = () => {
                     <Total />
 
                     <ModalWrapper 
-						form={<RecordForm type="Submit" />}
+						form={<RecordForm type="Submit" handleClose={handleClose} />}
 						btnTitle="Create Record"
-						modalTitle="Create a new Record" 
+                        btnVariant="outline-warning"
+						btnSize="lg"
+						modalTitle="Create a new Record"
+                        show={show}
+                        handleShow={handleShow}
+                        handleClose={handleClose}
 					/>
                     
                 </div>

@@ -6,6 +6,10 @@ import CategoryCard from './CategoryCard';
 
 const Categories = () => {
 	const [categories, setCategories] = useState([]);
+	const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
 	useEffect(() => {
 		fetch('http://localhost:3001/api/categories')
@@ -20,9 +24,14 @@ const Categories = () => {
 				<div className="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-between py-5">
 					<h2 className="page-title mx-2 mb-0">List of the Categories</h2>
 					<ModalWrapper 
-						form={<CategoryForm type="Submit" />}
+						form={<CategoryForm type="Submit" handleClose={handleClose} />}
 						btnTitle="Create Category"
-						modalTitle="Create a new Category" 
+						btnVariant="outline-warning"
+						btnSize="lg"
+						modalTitle="Create a new Category"
+						show={show}
+                        handleShow={handleShow}
+                        handleClose={handleClose}
 					/>
 				</div>
 

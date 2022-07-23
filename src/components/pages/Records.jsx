@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
+import RecordCard from './RecordCard';
 
 
 const Records = () => {
@@ -36,32 +37,14 @@ const Records = () => {
 						</Card.Header>
 						<div id="recordWrapper">
 							{records.map((record, index) => (
-								<Card.Footer data-record-div className="border-white" key={index}>
-									<Row className="d-flex justify-content-between align-items-center text-center">
-										<Col data-record-date xs={4} lg={2} className="fs-5 text-white mx-auto">
-											{record.createdAt}
-										</Col>
-										<Col data-record-category xs={4} lg={2} className="fs-5 text-white mx-auto">
-											{record.category.name}
-										</Col>
-										<Col data-record-money xs={4} lg={2} className="fs-3 mx-auto spent">
-											{record.money}
-										</Col>
-										<Col data-record-description lg={5} className="fs-5 text-white mt-lg-0 mx-auto">
-											{record.description}
-										</Col>
-										<Col lg={1} className="d-grid fs-5 text-white mt-lg-0 mx-auto">
-											<Button
-												variant="outline-warning"
-												data-edit-button
-												data-bs-toggle="modal"
-												data-bs-target="#modalFormEditRecord"
-											>
-												Edit
-											</Button>
-										</Col>
-									</Row>
-								</Card.Footer>
+								<RecordCard
+									key={index}
+									createdAt={record.createdAt}
+									categoryName={record.category.name}
+									money={record.money}
+									description={record.description}
+
+								/>
 							))}
 						</div>
 					</Card>
