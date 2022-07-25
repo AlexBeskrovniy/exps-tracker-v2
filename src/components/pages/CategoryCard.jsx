@@ -29,6 +29,7 @@ const CategoryCard = (props) => {
                             type="Edit" 
                             dataName={ props.categoryName } 
                             dataDescription={ props.categoryDescription }
+                            dataId={props.categoryId}
                             handleClose={handleClose}
                             />}
 						btnTitle="Edit Category"

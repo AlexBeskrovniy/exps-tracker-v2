@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import RecordCard from './RecordCard';
 
 
@@ -40,7 +40,7 @@ const Records = () => {
 								<RecordCard
 									key={index}
 									createdAt={record.createdAt}
-									categoryName={record.category.name}
+									categoryName={record.category ? record.category.name : "No category"}
 									money={record.money}
 									description={record.description}
 

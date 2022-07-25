@@ -4,20 +4,77 @@ import { useRef } from 'react';
 const CategoryForm = (props) => {
     const nameRef = useRef();
     const descriptionRef = useRef();
+    const idRef = useRef();
 
-    const handleSubmit = () => {
-        const data = 
+    const handleSubmit = async () => {
+        const formData = 
         {
             name: nameRef.current.value,
             description: descriptionRef.current.value
         }
-        console.log(data);
-        props.handleClose();
+        console.log(JSON.stringify(formData));
+        try {
+            const res = await fetch('http://localhost:3001/api/categories/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data); 
+            props.handleClose();
+        } catch (err) {
+            console.error(err);
+        }
+
     }
 
-    const handleDelete = () => {
-        console.log("Deleted");
-        props.handleClose();
+    const handleEdit = async () => {
+        const formData = 
+        {
+            id: idRef.current.value,
+            name: nameRef.current.value,
+            description: descriptionRef.current.value
+        }
+        console.log(JSON.stringify(formData));
+        try {
+            const res = await fetch('http://localhost:3001/api/categories/edit', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data); 
+            props.handleClose();
+        } catch (err) {
+            console.error(err);
+        }
+
+    }
+
+    const handleDelete = async () => {
+        const formData = 
+        {
+            id: idRef.current.value,
+        }
+        console.log(JSON.stringify(formData));
+        try {
+            const res = await fetch('http://localhost:3001/api/categories/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data); 
+            props.handleClose();
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     return (
@@ -53,19 +110,29 @@ const CategoryForm = (props) => {
                 <Button
                     variant="outline-warning"
                     size="lg"
-                    onClick={handleSubmit}
+                    onClick={props.type === "Submit" ? handleSubmit : handleEdit}
                 >
                     {props.type}
                 </Button>
                { props.type === "Edit" &&
-                    <Button
-                        variant="outline-warning"
-                        size="lg"
-                        className="mt-2"
-                        onClick={handleDelete}
-                >
-                        Delete
-                    </Button>
+                    <>
+                        <Form.Control
+                            type="hidden"
+                            name="name"
+                            placeholder="Name"
+                            ref={idRef}
+                            defaultValue={props.dataId}
+                            required
+                        />
+                        <Button
+                            variant="outline-warning"
+                            size="lg"
+                            className="mt-2"
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </Button>
+                    </>
                 }
             </Row>
         </>

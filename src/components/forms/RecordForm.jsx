@@ -28,7 +28,7 @@ const RecordForm = (props) => {
         fetch('http://localhost:3001/api/categories')
             .then(res => res.json())
             .then(data => {
-                setCategories(data)
+                setCategories(data);
             })
             .catch(err => console.error(err));
     }, []);
