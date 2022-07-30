@@ -6,7 +6,7 @@ import Total from './Total';
 import ModalWrapper from '../modals/ModalWrapper';
 import RecordForm from '../forms/RecordForm';
 
-const Header = () => {
+const Header = (props) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -21,13 +21,14 @@ const Header = () => {
 
                     <Nav />
 
-                    <Total />
+                    <Total records={props.records} />
 
                     <ModalWrapper 
-						form={<RecordForm type="Submit" handleClose={handleClose} />}
+						form={<RecordForm type="Submit" handleClose={handleClose} fetchRecords={props.fetchRecords} />}
 						btnTitle="Create Record"
                         btnVariant="outline-warning"
 						btnSize="lg"
+                        btnClassList="d-none d-lg-inline-block"
 						modalTitle="Create a new Record"
                         show={show}
                         handleShow={handleShow}

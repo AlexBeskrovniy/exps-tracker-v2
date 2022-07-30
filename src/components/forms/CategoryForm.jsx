@@ -1,5 +1,5 @@
-import { Row, Form, Button, FloatingLabel } from 'react-bootstrap';
 import { useRef } from 'react';
+import { Row, Form, Button, FloatingLabel } from 'react-bootstrap';
 
 const CategoryForm = (props) => {
     const nameRef = useRef();
@@ -22,12 +22,11 @@ const CategoryForm = (props) => {
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
-            console.log(data); 
+            props.fetchData();
             props.handleClose();
         } catch (err) {
             console.error(err);
         }
-
     }
 
     const handleEdit = async () => {
@@ -47,7 +46,7 @@ const CategoryForm = (props) => {
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
-            console.log(data); 
+            props.fetchData();
             props.handleClose();
         } catch (err) {
             console.error(err);
@@ -70,7 +69,7 @@ const CategoryForm = (props) => {
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
-            console.log(data); 
+            props.fetchData();
             props.handleClose();
         } catch (err) {
             console.error(err);

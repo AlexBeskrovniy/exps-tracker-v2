@@ -14,7 +14,7 @@ const RecordCard = (props) => {
         <Card.Footer className="border-white">
             <Row className="d-flex justify-content-between align-items-center text-center">
                 <Col xs={4} lg={2} className="fs-5 text-white mx-auto">
-                    {props.createdAt}
+                    {new Date(props.createdAt).toDateString()}
                 </Col>
                 <Col xs={4} lg={2} className="fs-5 text-white mx-auto">
                     {props.categoryName}
@@ -28,12 +28,14 @@ const RecordCard = (props) => {
                 <Col lg={1} className="d-grid fs-5 text-white mt-lg-0 mx-auto">
                     <ModalWrapper 
 						form={<RecordForm 
-                            type="Edit"
-                            dataMoney={props.money}
-                            dataCategoryName={props.categoryName}
-                            dataDescription={props.description}
-                            handleClose={handleClose} 
-                        />}
+                                type="Edit"
+                                dataMoney={props.money}
+                                dataCategoryName={props.categoryName}
+                                dataDescription={props.description}
+                                dataId={props.id}
+                                handleClose={handleClose}
+                                fetchRecords={props.fetchRecords}
+                            />}
 						btnTitle="Edit record"
                         btnVariant="warning"
                         btnSize="md"

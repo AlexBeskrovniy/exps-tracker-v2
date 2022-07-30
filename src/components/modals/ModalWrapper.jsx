@@ -7,6 +7,7 @@ const ModalWrapper = (props) => {
             <Button
                 variant={props.btnVariant}
                 size={ props.btnSize }
+                className={props.btnClassList}
                 onClick={props.handleShow}
             >
                 { props.btnTitle }

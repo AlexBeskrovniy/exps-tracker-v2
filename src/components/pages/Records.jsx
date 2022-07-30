@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import RecordCard from './RecordCard';
 
 
-const Records = () => {
-	const [records, setRecords] = useState([]);
+const Records = (props) => {
+	// const [records, setRecords] = useState([]);
 
-	useEffect(() => {
-		fetch('http://localhost:3001/api/records')
-			.then(res => res.json())
-			.then(data => setRecords(data))
-			.catch(err => console.error(err));
-	}, []);
+	// useEffect(() => {
+	// 	fetch('http://localhost:3001/api/records')
+	// 		.then(res => res.json())
+	// 		.then(data => setRecords(data))
+	// 		.catch(err => console.error(err));
+	// }, []);
 
 
     return (
@@ -22,7 +22,7 @@ const Records = () => {
 					<h2 className="page-title ms-2 mb-0">All Records</h2>
 				</div>
 
-				{ records.length !== 0 ?   (
+				{ props.records.length !== 0 ?   (
 				<Row className="d-flex justify-content-center">
 					
 					<Card bg="dark" border="light" className="px-0">
@@ -36,14 +36,15 @@ const Records = () => {
 							</Row>
 						</Card.Header>
 						<div id="recordWrapper">
-							{records.map((record, index) => (
+							{props.records.map((record, index) => (
 								<RecordCard
 									key={index}
 									createdAt={record.createdAt}
 									categoryName={record.category ? record.category.name : "No category"}
 									money={record.money}
 									description={record.description}
-
+									id={record._id}
+									fetchRecords={props.fetchRecords}
 								/>
 							))}
 						</div>

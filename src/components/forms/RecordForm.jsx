@@ -7,21 +7,79 @@ const RecordForm = (props) => {
     const moneyRef = useRef();
     const categoryRef = useRef();
     const descriptionRef = useRef();
+    const idRef = useRef();
 
-    const handleSubmit = () => {
-        const data = 
+    const handleSubmit = async () => {
+        const formData = 
         {
             money: moneyRef.current.value,
             category: categoryRef.current.value,
             description: descriptionRef.current.value
         }
-        console.log(data);
-        props.handleClose();
+        try {
+            const res = await fetch('http://localhost:3001/api/records/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data);
+            props.fetchRecords();
+            props.handleClose();
+        } catch (err) {
+            console.error(err);
+        }
     }
 
-    const handleDelete = () => {
-        console.log("Deleted");
-        props.handleClose();
+    const handleEdit = async () => {
+        const formData = 
+        {
+            id: idRef.current.value,
+            money: moneyRef.current.value,
+            category: categoryRef.current.value,
+            description: descriptionRef.current.value
+        }
+console.log(formData);
+        try {
+            const res = await fetch('http://localhost:3001/api/records/edit', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data);
+            props.fetchRecords();
+            props.handleClose();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const handleDelete = async () => {
+        const formData = 
+        {
+            id: idRef.current.value,
+        }
+
+        try {
+            const res = await fetch('http://localhost:3001/api/records/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data);
+            props.fetchRecords();
+            props.handleClose();
+        } catch (err) {
+            console.error(err);
+        }
     }
 //NOTE: Double fetch - need fix
     useEffect(() => {
@@ -88,23 +146,33 @@ const RecordForm = (props) => {
                     variant="outline-warning"
                     size="lg"
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={props.type === "Submit" ? handleSubmit : handleEdit}
                     >
                         {props.type}
                     </Button>
                    { props.type === "Edit" &&
+                    <>
+                        <Form.Control
+                            type="hidden"
+                            name="name"
+                            placeholder="Name"
+                            ref={idRef}
+                            defaultValue={props.dataId}
+                            required
+                        />
+
                         <Button
                             variant="outline-warning"
                             size="lg"
                             className="mt-2"
                             onClick={handleDelete}
-                    >
+                            >
                             Delete
                         </Button>
+                    </>
                     }
             </Row>
-        </>
-        
+        </> 
     );
 }
 

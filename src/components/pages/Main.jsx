@@ -1,10 +1,12 @@
+import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { MainChart } from '../charts/MainChart';
 
-const Main = () => {
+const Main = (props) => {
 
 	const [monthSpents, setMonthSpents] = useState(0);
+	const [chart, setChart] = useState([]);
 
 	const countSpents = (arr) => {
 		let total = 0;
@@ -19,9 +21,60 @@ const Main = () => {
 			.then(res => res.json())
 			.then(data => {
 				setMonthSpents(countSpents(data));
+				setChart(data);
+				console.log("Chart request");
 			})
 			.catch(err => console.error(err));
-	}, []);
+	}, [props.records]);
+	
+	const chartInfoHandler = (data) => {
+	   const result = data.reduce((accum, curent) => {
+		   const date = moment(curent.createdAt).format('MMM Do YY');
+		   if(!accum[date]) {
+			 accum[date] = curent.money;
+		   } else {
+			 accum[date] += curent.money;
+		   }
+		   return accum;
+		 }, {});
+	   
+		 const labels = [];
+		 const spents = [];
+		 Object.entries(result).map(([ date, money ]) => {
+		   labels.unshift(date);
+		   spents.unshift(money);
+		 });
+	
+		 return { labels: labels, spents: spents };
+	}
+	
+	const finalInfo = chartInfoHandler(chart);
+	  
+	const options = {
+		plugins: {
+			title: {
+			display: true,
+			text: 'Spents',
+			},
+			legend: false
+		},
+		responsive: true,
+		interaction: {
+			intersect: false
+		}
+	  };
+	  
+	const data = {
+		labels: finalInfo.labels,
+		datasets: [
+			{
+			label: 'This month',
+			data: finalInfo.spents,
+			backgroundColor: 'rgb(234, 162, 26)',
+			borderColor: 'rgb(234, 162, 26)'
+			}
+		]
+	  };
 
     return (
         <main className="main text-center">
@@ -32,7 +85,7 @@ const Main = () => {
 				</div>
 			</Container>
 			<div className="d-flex justify-content-center mx-auto" style={{maxWidth: '800px'}}>
-				<MainChart />
+				<MainChart options={options} data={data} />
 			</div>
 		</main>
     );

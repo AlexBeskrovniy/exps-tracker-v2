@@ -10,7 +10,7 @@ const CategoryCard = (props) => {
     const handleShow = () => setShow(true);
 
     return (
-        <Card bg="dark" text="white" data-category-div>
+        <Card bg="dark" text="white">
             <Card.Header>
                 <Card.Title className="fs-3">
                     { props.categoryName }
@@ -31,6 +31,7 @@ const CategoryCard = (props) => {
                             dataDescription={ props.categoryDescription }
                             dataId={props.categoryId}
                             handleClose={handleClose}
+                            fetchData={props.fetchData}
                             />}
 						btnTitle="Edit Category"
                         btnVariant="warning"
