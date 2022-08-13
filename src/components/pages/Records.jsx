@@ -1,18 +1,10 @@
-//import { useState, useEffect } from 'react';
+import { useRecordsContext } from '../../providers/RecordsProvider';
 import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import RecordCard from './RecordCard';
 
 
-const Records = (props) => {
-	// const [records, setRecords] = useState([]);
-
-	// useEffect(() => {
-	// 	fetch('http://localhost:3001/api/records')
-	// 		.then(res => res.json())
-	// 		.then(data => setRecords(data))
-	// 		.catch(err => console.error(err));
-	// }, []);
-
+const Records = () => {
+	const { records } = useRecordsContext();
 
     return (
 
@@ -22,7 +14,7 @@ const Records = (props) => {
 					<h2 className="page-title ms-2 mb-0">All Records</h2>
 				</div>
 
-				{ props.records.length !== 0 ?   (
+				{ records.length !== 0 ?   (
 				<Row className="d-flex justify-content-center">
 					
 					<Card bg="dark" border="light" className="px-0">
@@ -36,7 +28,7 @@ const Records = (props) => {
 							</Row>
 						</Card.Header>
 						<div id="recordWrapper">
-							{props.records.map((record, index) => (
+							{records.map((record, index) => (
 								<RecordCard
 									key={index}
 									createdAt={record.createdAt}
@@ -44,7 +36,6 @@ const Records = (props) => {
 									money={record.money}
 									description={record.description}
 									id={record._id}
-									fetchRecords={props.fetchRecords}
 								/>
 							))}
 						</div>

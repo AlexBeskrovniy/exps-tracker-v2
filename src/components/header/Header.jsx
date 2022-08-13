@@ -21,10 +21,10 @@ const Header = (props) => {
 
                     <Nav />
 
-                    <Total records={props.records} />
+                    <Total />
 
                     <ModalWrapper 
-						form={<RecordForm type="Submit" handleClose={handleClose} fetchRecords={props.fetchRecords} />}
+						form={<RecordForm type="Submit" handleClose={handleClose} />}
 						btnTitle="Create Record"
                         btnVariant="outline-warning"
 						btnSize="lg"

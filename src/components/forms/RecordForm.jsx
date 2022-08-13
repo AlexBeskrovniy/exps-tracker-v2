@@ -1,8 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useRecordsContext } from '../../providers/RecordsProvider';
+import { useCategoriesContext } from '../../providers/CategoriesProvider';
+
 import { Row, Form, Button, FloatingLabel } from 'react-bootstrap';
 
 const RecordForm = (props) => {
-    const [categories, setCategories] = useState([]);
+    const { useActualData } = useRecordsContext();
+    const { categories } = useCategoriesContext();
 
     const moneyRef = useRef();
     const categoryRef = useRef();
@@ -26,7 +30,7 @@ const RecordForm = (props) => {
             });
             const data = await res.json();
             console.log(data);
-            props.fetchRecords();
+            useActualData();
             props.handleClose();
         } catch (err) {
             console.error(err);
@@ -52,7 +56,7 @@ console.log(formData);
             });
             const data = await res.json();
             console.log(data);
-            props.fetchRecords();
+            useActualData();
             props.handleClose();
         } catch (err) {
             console.error(err);
@@ -75,23 +79,12 @@ console.log(formData);
             });
             const data = await res.json();
             console.log(data);
-            props.fetchRecords();
+            useActualData();
             props.handleClose();
         } catch (err) {
             console.error(err);
         }
     }
-//NOTE: Double fetch - need fix
-    useEffect(() => {
-        fetch('http://localhost:3001/api/categories')
-            .then(res => res.json())
-            .then(data => {
-                setCategories(data);
-            })
-            .catch(err => console.error(err));
-    }, []);
-    
-    
 
     return (
 

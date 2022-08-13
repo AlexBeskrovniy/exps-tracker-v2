@@ -31,7 +31,6 @@ const CategoryCard = (props) => {
                             dataDescription={ props.categoryDescription }
                             dataId={props.categoryId}
                             handleClose={handleClose}
-                            fetchData={props.fetchData}
                             />}
 						btnTitle="Edit Category"
                         btnVariant="warning"

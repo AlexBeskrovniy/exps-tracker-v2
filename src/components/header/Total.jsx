@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useRecordsContext } from '../../providers/RecordsProvider';
 
-const Total = (props) => {
+const Total = () => {
 
     const [total, setTotal] = useState(0);
+
+    const { records } = useRecordsContext();
 
     useEffect(() => {
 		fetch('http://localhost:3001/api/total')
@@ -12,7 +15,7 @@ const Total = (props) => {
                 console.log(data);
             })
 			.catch(err => console.error(err));
-	}, [props.records]);
+	}, [records]);
 
     return (
         <div className="d-flex align-items-center justify-content-center mx-3">

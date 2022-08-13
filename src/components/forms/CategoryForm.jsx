@@ -1,7 +1,12 @@
 import { useRef } from 'react';
+import { useCategoriesContext } from '../../providers/CategoriesProvider';
 import { Row, Form, Button, FloatingLabel } from 'react-bootstrap';
 
+
 const CategoryForm = (props) => {
+    
+    const { useActualData } = useCategoriesContext();
+
     const nameRef = useRef();
     const descriptionRef = useRef();
     const idRef = useRef();
@@ -22,7 +27,7 @@ const CategoryForm = (props) => {
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
-            props.fetchData();
+            useActualData();
             props.handleClose();
         } catch (err) {
             console.error(err);
@@ -46,7 +51,7 @@ const CategoryForm = (props) => {
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
-            props.fetchData();
+            useActualData();
             props.handleClose();
         } catch (err) {
             console.error(err);
@@ -69,7 +74,7 @@ const CategoryForm = (props) => {
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
-            props.fetchData();
+            useActualData();
             props.handleClose();
         } catch (err) {
             console.error(err);

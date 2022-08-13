@@ -1,12 +1,15 @@
 import moment from 'moment';
 import { useState, useEffect } from 'react';
+import { useRecordsContext } from '../../providers/RecordsProvider';
 import { Container } from 'react-bootstrap';
 import { MainChart } from '../charts/MainChart';
 
-const Main = (props) => {
+const Main = () => {
 
 	const [monthSpents, setMonthSpents] = useState(0);
 	const [chart, setChart] = useState([]);
+
+	const { records } = useRecordsContext();
 
 	const countSpents = (arr) => {
 		let total = 0;
@@ -25,7 +28,7 @@ const Main = (props) => {
 				console.log("Chart request");
 			})
 			.catch(err => console.error(err));
-	}, [props.records]);
+	}, [records]);
 	
 	const chartInfoHandler = (data) => {
 	   const result = data.reduce((accum, curent) => {
