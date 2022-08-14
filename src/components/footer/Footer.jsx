@@ -1,21 +1,30 @@
-import { Container, Row, Button } from 'react-bootstrap';
-
+import { useState } from 'react';
+import { Container, Row } from 'react-bootstrap';
+import ModalWrapper from '../modals/ModalWrapper';
+import RecordForm from '../forms/RecordForm';
 
 const thisYear = new Date().getFullYear();
 
 const Footer = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <footer className="footer fixed-bottom bg-dark text white pb-3">
             <Row className="d-flex justify-content-center">
-                <Button
-                    variant="warning"
-                    size="lg"
-                    className="d-lg-none d-inline-block"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalFormNewRecord"
-                >
-                    Create Record
-                </Button>
+                <ModalWrapper 
+                    form={<RecordForm type="Submit" handleClose={handleClose} />}
+                    btnTitle="Create Record"
+                    btnVariant="warning"
+                    btnSize="lg"
+                    btnClassList="d-lg-none d-inline-block"
+                    modalTitle="Create a new Record"
+                    show={show}
+                    handleShow={handleShow}
+                    handleClose={handleClose}
+				/>
             </Row>
             <Container>
                 <div className="d-flex flex-wrap align-items-center justify-content-around pt-3">
