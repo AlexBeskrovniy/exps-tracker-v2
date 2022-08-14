@@ -6,7 +6,7 @@ import Total from './Total';
 import ModalWrapper from '../modals/ModalWrapper';
 import RecordForm from '../forms/RecordForm';
 
-const Header = (props) => {
+const Header = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
