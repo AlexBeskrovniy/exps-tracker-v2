@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useFetch } from '../Utils';
 
 const RecordsContext = React.createContext();
 
@@ -6,25 +7,13 @@ export const useRecordsContext = () => {
     return useContext(RecordsContext);
 }
 
-const fetchRecords = async () => {
-    try {
-        const res = await fetch('http://localhost:3001/api/records');
-        const data = await res.json();
-        console.log(data);
-        return data;
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-const data = await fetchRecords();
+const data = await useFetch('http://localhost:3001/api/records');
 
 const RecordsProvider = ({ children }) => {
-
     const [records, setRecords] = useState(data);
 
     const useActualData = async () => {
-        const newData = await fetchRecords();
+        const newData = await useFetch('http://localhost:3001/api/records');
         setRecords(newData);
     }
 

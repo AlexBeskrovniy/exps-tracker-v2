@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useFetch } from '../../Utils';
 import { useRecordsContext } from '../../providers/RecordsProvider';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
 
@@ -20,21 +21,13 @@ const RecordForm = (props) => {
             category: categoryRef.current.value,
             description: descriptionRef.current.value
         }
-        try {
-            const res = await fetch('http://localhost:3001/api/records/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await res.json();
-            console.log(data);
+
+        const response = await useFetch('http://localhost:3001/api/records/create', 'POST', formData);
+
+        if(response) {
             useActualData();
-            props.handleClose();
-        } catch (err) {
-            console.error(err);
         }
+        props.handleClose();
     }
 
     const handleEdit = async () => {
@@ -45,22 +38,13 @@ const RecordForm = (props) => {
             category: categoryRef.current.value,
             description: descriptionRef.current.value
         }
-console.log(formData);
-        try {
-            const res = await fetch('http://localhost:3001/api/records/edit', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await res.json();
-            console.log(data);
+
+        const response = await useFetch('http://localhost:3001/api/records/edit', 'PUT', formData);
+
+        if(response) {
             useActualData();
-            props.handleClose();
-        } catch (err) {
-            console.error(err);
         }
+        props.handleClose();
     }
 
     const handleDelete = async () => {
@@ -69,21 +53,12 @@ console.log(formData);
             id: idRef.current.value,
         }
 
-        try {
-            const res = await fetch('http://localhost:3001/api/records/delete', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await res.json();
-            console.log(data);
+        const response = await useFetch('http://localhost:3001/api/records/delete', 'DELETE', formData);
+
+        if(response) {
             useActualData();
-            props.handleClose();
-        } catch (err) {
-            console.error(err);
         }
+        props.handleClose();
     }
 
     return (

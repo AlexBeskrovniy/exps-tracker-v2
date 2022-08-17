@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useFetch } from '../../Utils';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
 import { Row, Form, Button, FloatingLabel } from 'react-bootstrap';
 
@@ -17,21 +18,12 @@ const CategoryForm = (props) => {
             name: nameRef.current.value,
             description: descriptionRef.current.value
         }
-        console.log(JSON.stringify(formData));
-        try {
-            const res = await fetch('http://localhost:3001/api/categories/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await res.json();
+        const response = await useFetch('http://localhost:3001/api/categories/create', 'POST', formData);
+
+        if(response) {
             useActualData();
-            props.handleClose();
-        } catch (err) {
-            console.error(err);
         }
+        props.handleClose();
     }
 
     const handleEdit = async () => {
@@ -41,22 +33,13 @@ const CategoryForm = (props) => {
             name: nameRef.current.value,
             description: descriptionRef.current.value
         }
-        console.log(JSON.stringify(formData));
-        try {
-            const res = await fetch('http://localhost:3001/api/categories/edit', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await res.json();
-            useActualData();
-            props.handleClose();
-        } catch (err) {
-            console.error(err);
-        }
+        
+        const response = await useFetch('http://localhost:3001/api/categories/edit', 'PUT', formData);
 
+        if(response) {
+            useActualData();
+        }
+        props.handleClose();
     }
 
     const handleDelete = async () => {
@@ -64,21 +47,13 @@ const CategoryForm = (props) => {
         {
             id: idRef.current.value,
         }
-        console.log(JSON.stringify(formData));
-        try {
-            const res = await fetch('http://localhost:3001/api/categories/delete', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await res.json();
+        
+        const response = await useFetch('http://localhost:3001/api/categories/delete', 'DELETE', formData);
+
+        if(response) {
             useActualData();
-            props.handleClose();
-        } catch (err) {
-            console.error(err);
         }
+        props.handleClose();
     }
 
     return (
