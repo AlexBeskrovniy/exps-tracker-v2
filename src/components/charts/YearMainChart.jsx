@@ -24,14 +24,27 @@ import {
 
   const chartInfoHandler = (data) => {
     const result = data.reduce((accum, curent) => {
-        const date = moment(curent.createdAt).format('MMM Do YY');
+        const date = moment(curent.createdAt).format('MMMM');
         if(!accum[date]) {
           accum[date] = curent.money;
         } else {
           accum[date] += curent.money;
         }
         return accum;
-      }, {});
+      }, {
+        December: 0,
+        November: 0,
+        October: 0,
+        September: 0,
+        August: 0,
+        July: 0,
+        June: 0,
+        May: 0,
+        April: 0,
+        March: 0,
+        February: 0,
+        January: 0
+    });
     
       const labels = [];
       const spents = [];
@@ -43,16 +56,16 @@ import {
       return { labels: labels, spents: spents };
   }
 
-export const MainChart = () => {
+export const YearMainChart = () => {
   const { records } = useRecordsContext();
-	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
-  const finalInfo = chartInfoHandler(thisMonthRecords);
+	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
+  const finalInfo = chartInfoHandler(thisYearRecords);
     
   const options = {
       plugins: {
           title: {
           display: true,
-          text: 'This Month Spents'
+          text: 'This Year Spents'
           },
           legend: {
             display: false
