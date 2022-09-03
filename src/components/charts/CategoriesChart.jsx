@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { useRecordsContext } from '../../providers/RecordsProvider';
-//import { useCategoriesContext } from '../../providers/CategoriesProvider';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -40,7 +39,7 @@ export const CategoriesChart = () =>{
                 text: 'This Month Spents By Categories'
             },
             legend: {
-                position: 'top',
+                position: 'bottom',
                 labels: {
                     padding: 15,
                     usePointStyle: true

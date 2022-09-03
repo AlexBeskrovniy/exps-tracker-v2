@@ -22,6 +22,23 @@ import {
     Legend
   );
 
+export const MainChart = () => {
+  const { records } = useRecordsContext();
+	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
+
+  const daysCount = moment(moment().format('YYYY-MM')).daysInMonth();
+
+const getDates = () => {
+  const data = {};
+  let counter = 1;
+  do {
+    data[moment().date(counter).format('MMM Do YY')] = 0;
+    counter++;
+  } while (counter <= daysCount);
+  return data;
+}
+const dates = getDates();
+
   const chartInfoHandler = (data) => {
     const result = data.reduce((accum, curent) => {
         const date = moment(curent.createdAt).format('MMM Do YY');
@@ -31,21 +48,18 @@ import {
           accum[date] += curent.money;
         }
         return accum;
-      }, {});
+      }, dates);
     
       const labels = [];
       const spents = [];
       Object.entries(result).map(([ date, money ]) => {
-        labels.unshift(date);
-        spents.unshift(money);
+        labels.push(date);
+        spents.push(money);
       });
 
       return { labels: labels, spents: spents };
   }
 
-export const MainChart = () => {
-  const { records } = useRecordsContext();
-	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
   const finalInfo = chartInfoHandler(thisMonthRecords);
     
   const options = {

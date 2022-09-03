@@ -22,6 +22,19 @@ import {
     Legend
   );
 
+
+export const YearMainChart = () => {
+  const { records } = useRecordsContext();
+	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
+  
+  const getMonths = () => {
+    const data = {};
+    moment.months().reverse().map(month => data[month] = 0);
+    return data;
+  }
+  
+  const months = getMonths();
+
   const chartInfoHandler = (data) => {
     const result = data.reduce((accum, curent) => {
         const date = moment(curent.createdAt).format('MMMM');
@@ -31,20 +44,7 @@ import {
           accum[date] += curent.money;
         }
         return accum;
-      }, {
-        December: 0,
-        November: 0,
-        October: 0,
-        September: 0,
-        August: 0,
-        July: 0,
-        June: 0,
-        May: 0,
-        April: 0,
-        March: 0,
-        February: 0,
-        January: 0
-    });
+      }, months );
     
       const labels = [];
       const spents = [];
@@ -55,10 +55,6 @@ import {
 
       return { labels: labels, spents: spents };
   }
-
-export const YearMainChart = () => {
-  const { records } = useRecordsContext();
-	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
   const finalInfo = chartInfoHandler(thisYearRecords);
     
   const options = {

@@ -16,12 +16,27 @@ const countSpents = (arr) => {
 const Main = () => {
 	const { records } = useRecordsContext();
 
+	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
+	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
+	const thisMonthSpents = countSpents(thisMonthRecords);
+	const thisYearSpents = countSpents(thisYearRecords);
+
 	const [chart, setChart] = useState(<MainChart />);
 	const [active, setActive] = useState({ activeItem: 'item0' });
+	const [title, setTitle] = useState('In This Mounth');
+	const [chartTotal, setChartTotal] = useState(thisMonthSpents);
 
 	const useActive = (element, id) => {
 		setChart(element)
 		setActive({ activeItem: id });
+		id === 'item1' || id === 'item3' ?
+		(
+			setTitle('In This Year'),
+			setChartTotal(thisYearSpents)
+		) : (
+			setTitle('In This Month'),
+			setChartTotal(thisMonthSpents)
+		)
 	};
 
 	const getClassName = (id) => {
@@ -32,15 +47,12 @@ const Main = () => {
 		return 'nav-link text-white';
 	};
 
-	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
-	const thisMonthSpents = countSpents(thisMonthRecords);
-
     return (
         <main className="main text-center">
 			<Container>
 				<div className="d-flex flex-wrap align-items-center justify-content-center my-3">
-					<h3 className="text-white text-uppercase mx-3 my-0">In this month:</h3>
-					<span className="spent fs-1">{thisMonthSpents}</span>
+					<h3 className="text-white text-uppercase mx-3 my-0">{ title }</h3>
+					<span className="spent fs-1">{ chartTotal }</span>
 				</div>
 				<div>
 					<ul className="nav d-flex flex-wrap align-items-center justify-content-evenly my-3">

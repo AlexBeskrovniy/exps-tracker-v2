@@ -8,7 +8,6 @@ export const useFetch = async (url, method, body ) => {
             body: JSON.stringify(body)
         });
         const data = await res.json();
-        console.log(data);
         return data;
     } catch (err) {
         console.error(err);

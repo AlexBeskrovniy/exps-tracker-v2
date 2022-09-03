@@ -33,8 +33,8 @@ const RecordCard = (props) => {
                                 dataCategoryName={props.categoryName}
                                 dataDescription={props.description}
                                 dataId={props.id}
+                                dataCreatedAt={props.createdAt}
                                 handleClose={handleClose}
-                                fetchRecords={props.fetchRecords}
                             />}
 						btnTitle="Edit record"
                         btnVariant="warning"

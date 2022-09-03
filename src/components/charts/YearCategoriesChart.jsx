@@ -40,7 +40,7 @@ export const YearCategoriesChart = () =>{
                 text: 'This Month Spents By Categories'
             },
             legend: {
-                position: 'top',
+                position: 'bottom',
                 labels: {
                     padding: 15,
                     usePointStyle: true

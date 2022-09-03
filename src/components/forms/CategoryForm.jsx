@@ -1,18 +1,21 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
-import { Row, Form, Button, FloatingLabel } from 'react-bootstrap';
+import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 
 
 const CategoryForm = (props) => {
-    
     const { useActualData } = useCategoriesContext();
+
+    const [loading, setLoading] = useState(false);
 
     const nameRef = useRef();
     const descriptionRef = useRef();
     const idRef = useRef();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
         const formData = 
         {
             name: nameRef.current.value,
@@ -26,7 +29,9 @@ const CategoryForm = (props) => {
         props.handleClose();
     }
 
-    const handleEdit = async () => {
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
         const formData = 
         {
             id: idRef.current.value,
@@ -57,7 +62,7 @@ const CategoryForm = (props) => {
     }
 
     return (
-        <>
+        <Form onSubmit={props.type === "Submit" ? handleSubmit : handleEdit}>
             <FloatingLabel
                 controlId="floatingInput"
                 label="Name"
@@ -87,11 +92,12 @@ const CategoryForm = (props) => {
             </FloatingLabel>
             <Row className="d-flex justify-content-between px-2">
                 <Button
+                    disabled={loading}
                     variant="outline-warning"
                     size="lg"
-                    onClick={props.type === "Submit" ? handleSubmit : handleEdit}
+                    type="submit"
                 >
-                    {props.type}
+                    {loading ? <Spinner as="span" animation="border" variant="warning" /> : props.type}
                 </Button>
                { props.type === "Edit" &&
                     <>
@@ -114,8 +120,7 @@ const CategoryForm = (props) => {
                     </>
                 }
             </Row>
-        </>
-
+        </Form>
     );
 }
 
