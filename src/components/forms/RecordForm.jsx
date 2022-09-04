@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
 import { useRecordsContext } from '../../providers/RecordsProvider';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
-
+import AlertCard from '../pages/AlertCard';
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 
 const RecordForm = (props) => {
@@ -152,14 +152,15 @@ const RecordForm = (props) => {
                             required
                         />
 
-                        <Button
+                        {/* <Button
                             variant="outline-warning"
                             size="lg"
                             className="mt-2"
                             onClick={handleDelete}
                             >
                             Delete
-                        </Button>
+                        </Button> */}
+                        <AlertCard variant={'danger'} message={'Are you sure? This action will delete this record.'} handleDelete={handleDelete} />
                     </>
                     }
             </Row>
