@@ -3,12 +3,14 @@ import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
 import { useRecordsContext } from '../../providers/RecordsProvider';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
+import { useAlertContext } from "../../providers/AlertProvider";
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
-import AlertCard from '../pages/AlertCard';
+import AlertConfirm from '../alerts/AlertConfirm';
 
 const RecordForm = (props) => {
     const { useActualData } = useRecordsContext();
     const { categories } = useCategoriesContext();
+    const { useAlert } = useAlertContext();
 
     const [loading, setLoading] = useState(false);
 
@@ -29,9 +31,11 @@ const RecordForm = (props) => {
             description: descriptionRef.current.value
         }
         const response = await useFetch('http://localhost:3001/api/records/create', 'POST', formData);
-        console.log(response);
-        if(response) {
+        if(response.ok) {
             useActualData();
+            useAlert('success', 'New record has created.');
+        } else {
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
     }
@@ -47,11 +51,12 @@ const RecordForm = (props) => {
             category: categoryRef.current.value,
             description: descriptionRef.current.value
         }
-
         const response = await useFetch('http://localhost:3001/api/records/edit', 'PUT', formData);
-
-        if(response) {
+        if(response.ok) {
             useActualData();
+            useAlert('success', 'Record has updated.');
+        } else {
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
     }
@@ -63,9 +68,11 @@ const RecordForm = (props) => {
         }
 
         const response = await useFetch('http://localhost:3001/api/records/delete', 'DELETE', formData);
-
-        if(response) {
+        if(response.ok) {
             useActualData();
+            useAlert('success', 'Record has deleted.');
+        } else {
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
     }
@@ -134,7 +141,6 @@ const RecordForm = (props) => {
             </FloatingLabel>
             <Row className="px-2">
                 <Button
-                // hidden={true}
                     disabled={loading}
                     variant="outline-warning"
                     size="lg"
@@ -152,7 +158,7 @@ const RecordForm = (props) => {
                             defaultValue={props.dataId}
                             required
                         />
-                        <AlertCard variant={'warning'} message={'This action will delete this record.'} handleDelete={handleDelete} />
+                        <AlertConfirm variant={'warning'} message={'This action will delete this record.'} handleDelete={handleDelete} />
                     </>
                     }
             </Row>

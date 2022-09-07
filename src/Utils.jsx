@@ -7,6 +7,9 @@ export const useFetch = async (url, method, body ) => {
             },
             body: JSON.stringify(body)
         });
+        if (method) {
+            return res;
+        }
         const data = await res.json();
         return data;
     } catch (err) {

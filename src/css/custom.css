@@ -44,6 +44,7 @@ h1, h2, h3, h4, h5, h6,
 
 .alert-dismissible {
 	padding-right: 1rem;
+	z-index: 9999;
 }
 
 /**Adaptive cards with modal forms**/

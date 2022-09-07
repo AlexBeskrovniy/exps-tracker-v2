@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Alert, Button, Row, Spinner } from 'react-bootstrap';
+import { Alert, Button, Spinner } from 'react-bootstrap';
 
-const AlertCard = (props) => {
+const AlertConfirm = (props) => {
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -46,4 +46,4 @@ const AlertCard = (props) => {
             </Button>;
 }
 
-export default AlertCard;
+export default AlertConfirm;

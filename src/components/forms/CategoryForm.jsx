@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
+import { useAlertContext } from "../../providers/AlertProvider";
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
-import AlertCard from '../pages/AlertCard';
+import AlertConfirm from '../alerts/AlertConfirm';
 
 const CategoryForm = (props) => {
     const { useActualData } = useCategoriesContext();
+    const { useAlert } = useAlertContext();
 
     const [loading, setLoading] = useState(false);
 
@@ -21,10 +23,13 @@ const CategoryForm = (props) => {
             name: nameRef.current.value,
             description: descriptionRef.current.value
         }
-        const response = await useFetch('http://localhost:3001/api/categories/create', 'POST', formData);
 
-        if(response) {
+        const response = await useFetch('http://localhost:3001/api/categories/create', 'POST', formData);
+        if(response.ok) {
             useActualData();
+            useAlert('success', 'New category has created.');
+        } else {
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
     }
@@ -40,9 +45,11 @@ const CategoryForm = (props) => {
         }
         
         const response = await useFetch('http://localhost:3001/api/categories/edit', 'PUT', formData);
-
-        if(response) {
+        if(response.ok) {
             useActualData();
+            useAlert('success', 'Category has updated.');
+        } else {
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
     }
@@ -54,9 +61,11 @@ const CategoryForm = (props) => {
         }
         
         const response = await useFetch('http://localhost:3001/api/categories/delete', 'DELETE', formData);
-
-        if(response) {
+        if(response.ok) {
             useActualData();
+            useAlert('success', 'Category has deleted.');
+        } else {
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
     }
@@ -109,7 +118,7 @@ const CategoryForm = (props) => {
                             defaultValue={props.dataId}
                             required
                         />
-                        <AlertCard variant={'warning'} message={'This action will delete this category.'} handleDelete={handleDelete} />
+                        <AlertConfirm variant={'warning'} message={'This action will delete this category.'} handleDelete={handleDelete} />
                     </>
                 }
             </Row>
