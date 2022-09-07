@@ -3,8 +3,8 @@ import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
 import { useRecordsContext } from '../../providers/RecordsProvider';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
-import AlertCard from '../pages/AlertCard';
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
+import AlertCard from '../pages/AlertCard';
 
 const RecordForm = (props) => {
     const { useActualData } = useRecordsContext();
@@ -83,7 +83,7 @@ const RecordForm = (props) => {
                     name="date"
                     placeholder="Date"
                     ref={dateRef}
-                    defaultValue={moment(new Date(props.dataCreatedAt)).format('yyyy-MM-DD')}
+                    defaultValue={props.dataCreatedAt ? moment(new Date(props.dataCreatedAt)).format('yyyy-MM-DD') : moment().format('yyyy-MM-DD')}
                     
                 />
             </FloatingLabel>
@@ -103,7 +103,7 @@ const RecordForm = (props) => {
             </FloatingLabel>
             <FloatingLabel
                 controlId="floatingSelect"
-                label="How much money was spent?"
+                label="Choose the Category"
                 className="mb-3"
             >
                     { categories.length && (
@@ -134,12 +134,13 @@ const RecordForm = (props) => {
             </FloatingLabel>
             <Row className="px-2">
                 <Button
+                // hidden={true}
                     disabled={loading}
                     variant="outline-warning"
                     size="lg"
                     type="submit"
                     >
-                        {loading ? <Spinner as="span" animation="border" variant="warning" /> : props.type}
+                        {loading ? <Spinner as="span" animation="border" variant="warning" size="sm" /> : props.type}
                     </Button>
                    { props.type === "Edit" &&
                     <>
@@ -151,16 +152,7 @@ const RecordForm = (props) => {
                             defaultValue={props.dataId}
                             required
                         />
-
-                        {/* <Button
-                            variant="outline-warning"
-                            size="lg"
-                            className="mt-2"
-                            onClick={handleDelete}
-                            >
-                            Delete
-                        </Button> */}
-                        <AlertCard variant={'danger'} message={'Are you sure? This action will delete this record.'} handleDelete={handleDelete} />
+                        <AlertCard variant={'warning'} message={'This action will delete this record.'} handleDelete={handleDelete} />
                     </>
                     }
             </Row>

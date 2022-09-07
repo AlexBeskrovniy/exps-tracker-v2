@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
-
+import AlertCard from '../pages/AlertCard';
 
 const CategoryForm = (props) => {
     const { useActualData } = useCategoriesContext();
@@ -97,7 +97,7 @@ const CategoryForm = (props) => {
                     size="lg"
                     type="submit"
                 >
-                    {loading ? <Spinner as="span" animation="border" variant="warning" /> : props.type}
+                    {loading ? <Spinner as="span" animation="border" variant="warning" size="sm" /> : props.type}
                 </Button>
                { props.type === "Edit" &&
                     <>
@@ -109,14 +109,7 @@ const CategoryForm = (props) => {
                             defaultValue={props.dataId}
                             required
                         />
-                        <Button
-                            variant="outline-warning"
-                            size="lg"
-                            className="mt-2"
-                            onClick={handleDelete}
-                        >
-                            Delete
-                        </Button>
+                        <AlertCard variant={'warning'} message={'This action will delete this category.'} handleDelete={handleDelete} />
                     </>
                 }
             </Row>

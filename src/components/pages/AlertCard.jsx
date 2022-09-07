@@ -1,19 +1,39 @@
 import { useState } from 'react';
-import { Alert, Button, Row } from 'react-bootstrap';
+import { Alert, Button, Row, Spinner } from 'react-bootstrap';
 
 const AlertCard = (props) => {
-    const[show, setShow] = useState(false);
+    const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const handleConfirm = () => {
+        setLoading(true);
+        props.handleDelete();
+    }
+
     if (show) {
         return (
-            <Alert variant={props.variant} className="text-center mt-2" onClose={() => setShow(false)} dismissible>
-                <p>{props.message}</p>
-                <Button
-                    onClick={props.handleDelete}
-                    variant="outline-danger"
-                    size="lg"
-                    className="mt-1 mx-auto"
-                >Delete
-                </Button>
+            <Alert variant={props.variant} className="mt-2" onClose={() => setShow(false)} dismissible>
+                <Alert.Heading>Are You Sure?</Alert.Heading>
+                <hr />
+                <div className="text-center">
+                    <p>{ props.message }</p>
+                </div>
+                <div className="d-flex justify-content-around">
+                    <Button
+                        disabled={loading}
+                        onClick={handleConfirm}
+                        variant="warning"
+                        size="lg"
+                    >
+                        {loading ? <Spinner as="span" animation="border" variant="dark" size="sm" className='mx-3' /> : 'Confirm'}
+                    </Button>
+                    <Button
+                        onClick={() => setShow(false)}
+                        variant="warning"
+                        size="lg"
+                    >Dismiss
+                    </Button>
+                </div>
             </Alert>
         );
     }
