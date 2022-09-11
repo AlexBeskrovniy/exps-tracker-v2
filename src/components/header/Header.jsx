@@ -5,6 +5,8 @@ import Nav from './Nav';
 import Total from './Total';
 import ModalWrapper from '../modals/ModalWrapper';
 import RecordForm from '../forms/RecordForm';
+import ModalRegistration from '../modals/ModalRegistration';
+import ModalLogin from '../modals/ModalLogin';
 
 const Header = () => {
     const [show, setShow] = useState(false);
@@ -35,6 +37,8 @@ const Header = () => {
                         handleClose={handleClose}
 					/>
                     
+                    <ModalRegistration />
+                    <ModalLogin />
                 </div>
             </Container>
         </header>
