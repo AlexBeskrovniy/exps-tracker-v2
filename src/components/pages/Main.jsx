@@ -1,11 +1,13 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { useRecordsContext } from '../../providers/RecordsProvider';
+import { useAuthContext } from '../../providers/AuthProvider';
 import { Container } from 'react-bootstrap';
 import { MainChart } from '../charts/MainChart';
 import { YearMainChart } from '../charts/YearMainChart';
 import { CategoriesChart } from '../charts/CategoriesChart';
 import { YearCategoriesChart } from '../charts/YearCategoriesChart';
+import TestMain from './TestMain';
 
 const countSpents = (arr) => {
 	let total = 0;
@@ -14,6 +16,7 @@ const countSpents = (arr) => {
 }
 
 const Main = () => {
+	const { user } = useAuthContext();
 	const { records } = useRecordsContext();
 
 	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());

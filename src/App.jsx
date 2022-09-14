@@ -15,25 +15,34 @@ import PageNotFound from './components/pages/PageNotFound';
 import AlertMessage from './components/alerts/AlertMessage';
 
 const App = () => {
-
     return (
-        <RecordsProvider>
-            <CategoriesProvider>
-                <BrowserRouter>
-                    <AlertProvider>
-                        <AlertMessage />
-                        <Header />
-                        <Routes>
-                            <Route path="/" element={<Main />} />
-                            <Route path="/categories" element={<Categories />} />
-                            <Route path="/records" element={<Records />} />
-                            <Route path="*" element={<PageNotFound />}/>
-                        </Routes>
-                        <Footer />
-                    </AlertProvider>
-                </BrowserRouter>
-            </CategoriesProvider>
-        </RecordsProvider>
+        <AuthProvider>
+            <RecordsProvider>
+                <CategoriesProvider>
+                    <BrowserRouter>
+                        <AlertProvider>
+                            <AlertMessage />
+                            <Header />
+                            <Routes>
+                                <Route path="/" element={<Main />} />
+                                <Route path="/categories" element={
+                                    <ProtectedRoute>
+                                        <Categories />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/records" element={
+                                    <ProtectedRoute>
+                                        <Records />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="*" element={<PageNotFound />}/>
+                            </Routes>
+                            <Footer />
+                        </AlertProvider>
+                    </BrowserRouter>
+                </CategoriesProvider>
+            </RecordsProvider>
+        </AuthProvider>
     );
 }
 

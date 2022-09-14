@@ -7,7 +7,6 @@ const Nav = () => {
                 <NavLink to="/categories" className="nav-link px-3 text-uppercase"
                     style={({ isActive }) => ({ color: isActive ? '#FFC107' : 'white'})}
                 >
-                   
                     Categories
                 </NavLink>
             </li>

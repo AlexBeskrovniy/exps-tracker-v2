@@ -3,9 +3,12 @@ import { Container, Row } from 'react-bootstrap';
 import ModalWrapper from '../modals/ModalWrapper';
 import RecordForm from '../forms/RecordForm';
 
+import { useAuthContext } from "../../providers/AuthProvider";
+
 const thisYear = new Date().getFullYear();
 
 const Footer = () => {
+    const { user } = useAuthContext();
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -13,19 +16,21 @@ const Footer = () => {
 
     return (
         <footer className="footer fixed-bottom bg-dark text white pb-3">
-            <Row className="d-flex justify-content-center">
-                <ModalWrapper 
-                    form={<RecordForm type="Submit" handleClose={handleClose} />}
-                    btnTitle="Create Record"
-                    btnVariant="warning"
-                    btnSize="lg"
-                    btnClassList="d-lg-none d-inline-block"
-                    modalTitle="Create a new Record"
-                    show={show}
-                    handleShow={handleShow}
-                    handleClose={handleClose}
-				/>
-            </Row>
+            {user && (
+                <Row className="d-flex justify-content-center">
+                    <ModalWrapper 
+                        form={<RecordForm type="Submit" handleClose={handleClose} />}
+                        btnTitle="Create Record"
+                        btnVariant="warning"
+                        btnSize="lg"
+                        btnClassList="d-lg-none d-inline-block"
+                        modalTitle="Create a new Record"
+                        show={show}
+                        handleShow={handleShow}
+                        handleClose={handleClose}
+                    />
+                </Row>
+            )}
             <Container>
                 <div className="d-flex flex-wrap align-items-center justify-content-around pt-3">
                     <div>

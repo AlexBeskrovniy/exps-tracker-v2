@@ -8,7 +8,11 @@ import RecordForm from '../forms/RecordForm';
 import ModalRegistration from '../modals/ModalRegistration';
 import ModalLogin from '../modals/ModalLogin';
 
+import { useAuthContext } from "../../providers/AuthProvider";
+
 const Header = () => {
+    const { user } = useAuthContext();
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -20,25 +24,32 @@ const Header = () => {
                 <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
                     <Logo />
-
-                    <Nav />
-
-                    <Total />
-
-                    <ModalWrapper 
-						form={<RecordForm type="Submit" handleClose={handleClose} />}
-						btnTitle="Create Record"
-                        btnVariant="outline-warning"
-						btnSize="lg"
-                        btnClassList="d-none d-lg-inline-block"
-						modalTitle="Create a new Record"
-                        show={show}
-                        handleShow={handleShow}
-                        handleClose={handleClose}
-					/>
                     
-                    <ModalRegistration />
-                    <ModalLogin />
+                    {user ? (
+                        <>
+                            <Nav />
+
+                            <Total />
+        
+                            <ModalWrapper 
+                                form={<RecordForm type="Submit" handleClose={handleClose} />}
+                                btnTitle="Create Record"
+                                btnVariant="outline-warning"
+                                btnSize="lg"
+                                btnClassList="d-none d-lg-inline-block"
+                                modalTitle="Create a new Record"
+                                show={show}
+                                handleShow={handleShow}
+                                handleClose={handleClose}
+                            />
+                        </>
+                    ) : (
+                        <div className="d-flex align-items-center justify-content-center col-12 col-lg-auto ms-lg-auto">
+                            <ModalRegistration />
+                            <ModalLogin />
+                        </div>
+                    )}
+
                 </div>
             </Container>
         </header>

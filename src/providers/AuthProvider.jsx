@@ -6,34 +6,35 @@ export const useAuthContext = () => {
     return useContext(AuthContext);
 }
 
-// const jwt = localStorage.getItem('jwt');
+const jwt = localStorage.getItem('jwt');
+console.log(jwt);
+const checkAuth = async () => {
+    try{
+        const res = jwt && await fetch('http://localhost:3001/api/user', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        if (res?.ok) {
+            const data = await res.json();
+            return data;
+        };
+        return false;
+    } catch(err) {
+        console.error(err);
+    }
+}
 
-// const checkAuth = async () => {
-//     try{
-//         const res = await fetch('http://localhost:4001/api/user/authcheck', {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': `Bearer ${jwt}`,
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-//         if (res.ok) {
-//             const data = await res.json();
-//             return data;
-//         };
-//         return false;
-//     } catch(err) {
-//         console.error(err);
-//     }
-// }
 
-// const userData = jwt ? await checkAuth() : null;
-
+const userData = await checkAuth();
+console.log(userData);
 const AuthProvider = ({ children }) => {
 
-    const [token, setToken] = useState(null);
-    const [user, setUser] = useState(null);
-
+    const [token, setToken] = useState(jwt);
+    const [user, setUser] = useState(userData);
+console.log(token, user);
     const onLogIn = (data) => {
         localStorage.setItem('jwt', data.token);
         setToken(data.token);
