@@ -1,8 +1,9 @@
-export const useFetch = async (url, method, body ) => {
+export const useFetch = async (url, token, method, body ) => {
     try {
         const res = await fetch(url, {
             method: method,
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)

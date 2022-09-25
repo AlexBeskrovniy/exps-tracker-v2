@@ -11,7 +11,7 @@ export const CategoriesChart = () =>{
 	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
     const finalInfo = () => {
         const result = thisMonthRecords.reduce((accum, record) => {
-            const name = record.category ? record.category.name : "No category"
+            const name = record.categoryName ? record.categoryName : "No category"
             if (!accum[name]) {
                 accum[name] = record.money;
             } else {

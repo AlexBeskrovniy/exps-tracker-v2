@@ -12,7 +12,7 @@ export const YearCategoriesChart = () =>{
 	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
     const finalInfo = () => {
         const result = thisYearRecords.reduce((accum, record) => {
-            const name = record.category ? record.category.name : "No category"
+            const name = record.categoryName ? record.categoryName : "No category"
             if (!accum[name]) {
                 accum[name] = record.money;
             } else {

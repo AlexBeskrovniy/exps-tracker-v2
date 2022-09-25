@@ -32,7 +32,7 @@ const Records = () => {
 								<RecordCard
 									key={index}
 									createdAt={record.createdAt}
-									categoryName={record.category ? record.category.name : "No category"}
+									categoryName={record.categoryName ? record.categoryName : "No category"}
 									money={record.money}
 									description={record.description}
 									id={record._id}

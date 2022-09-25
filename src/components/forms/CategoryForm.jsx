@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
+import { useAuthContext } from '../../providers/AuthProvider';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const CategoryForm = (props) => {
+    const { token } = useAuthContext();
     const { useActualData } = useCategoriesContext();
     const { useAlert } = useAlertContext();
 
@@ -24,9 +26,9 @@ const CategoryForm = (props) => {
             description: descriptionRef.current.value
         }
 
-        const response = await useFetch('http://localhost:3001/api/categories/create', 'POST', formData);
+        const response = await useFetch('http://localhost:3001/api/categories/create', token, 'POST', formData);
         if(response.ok) {
-            useActualData();
+            await useActualData();
             useAlert('success', 'New category has created.');
         } else {
             useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
