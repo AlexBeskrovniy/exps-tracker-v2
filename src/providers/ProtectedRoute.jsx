@@ -5,7 +5,7 @@ import { useAuthContext } from "./AuthProvider";
 const ProtectedRoute = ({ children }) => {
     const { user } = useAuthContext();
     if (!user) {
-        return <Navigate to="/" replace />
+        return <Navigate to="/registration" replace />
     }
     return children;
 }

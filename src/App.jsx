@@ -8,6 +8,8 @@ import ProtectedRoute from './providers/ProtectedRoute';
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
+import Registration from './components/pages/Registration';
+import Login from './components/pages/Login';
 import Main from './components/pages/Main';
 import Categories from './components/pages/Categories';
 import Records from './components/pages/Records';
@@ -24,7 +26,13 @@ const App = () => {
                             <AlertMessage />
                             <Header />
                             <Routes>
-                                <Route path="/" element={<Main />} />
+                                <Route path="/" element={
+                                    <ProtectedRoute>
+                                        <Main />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/registration" element={<Registration />} />
+                                <Route path="/login" element={<Login />} />
                                 <Route path="/categories" element={
                                     <ProtectedRoute>
                                         <Categories />
