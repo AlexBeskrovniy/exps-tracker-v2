@@ -8,12 +8,10 @@ export const useCategoriesContext = () => {
     return useContext(CategoriesContext);
 }
 
-
 const CategoriesProvider = ({ children }) => {
     const { token, user } = useAuthContext();
-
     const data = user ? user.categories : [];
-    
+
     const [categories, setCategories] = useState(data);
 
     const useActualData = async () => {

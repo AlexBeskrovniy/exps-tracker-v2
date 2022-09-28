@@ -11,7 +11,7 @@ const AlertMessage = () => {
     if (alert) {
         hideAlert();
         return (
-            <Alert variant={alert.variant} className="position-fixed top-0 start-0 w-100 text-center" onClose={dismissAlert} dismissible>
+            <Alert variant={alert.variant} className="position-fixed bottom-0 start-0 w-100 text-center" onClose={dismissAlert} dismissible>
                 <p>{alert.message}</p>
             </Alert>
         );

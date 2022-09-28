@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
     const [token, setToken] = useState(jwt);
     const [user, setUser] = useState(userData);
-console.log(token, user);
+
     const onLogIn = (data) => {
         localStorage.setItem('jwt', data.token);
         setToken(data.token);

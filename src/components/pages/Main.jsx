@@ -15,9 +15,9 @@ const countSpents = (arr) => {
 
 const Main = () => {
 	const { records } = useRecordsContext();
-
-	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
-	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
+	
+	const thisMonthRecords = records?.filter(record => record.createdAt > moment().startOf('month').toISOString());
+	const thisYearRecords = records?.filter(record => record.createdAt > moment().startOf('year').toISOString());
 	const thisMonthSpents = countSpents(thisMonthRecords);
 	const thisYearSpents = countSpents(thisYearRecords);
 

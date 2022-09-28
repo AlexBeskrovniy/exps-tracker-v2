@@ -8,20 +8,22 @@ export const useRecordsContext = () => {
     return useContext(RecordsContext);
 }
 
-// const data = await useFetch('http://localhost:3001/api/records');
-
 const RecordsProvider = ({ children }) => {
     const { token, user } = useAuthContext();
     const data = user ? user.records : [];
+    const totalSpent = user ? user.total : 0;
+
     const [records, setRecords] = useState(data);
+    const [total, setTotal] = useState(totalSpent);
 
     const useActualData = async () => {
-        const newData = await useFetch('http://localhost:3001/api/records');
-        setRecords(newData);
+        const newData = await useFetch('http://localhost:3001/api/records', token);
+        setRecords(newData.records);
+        setTotal(newData.total);
     }
 
     return(
-        <RecordsContext.Provider value={{ records, useActualData }}>
+        <RecordsContext.Provider value={{ records, total, useActualData }}>
             { children }
         </RecordsContext.Provider>
     );

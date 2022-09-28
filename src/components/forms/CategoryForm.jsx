@@ -46,7 +46,7 @@ const CategoryForm = (props) => {
             description: descriptionRef.current.value
         }
         
-        const response = await useFetch('http://localhost:3001/api/categories/edit', 'PUT', formData);
+        const response = await useFetch('http://localhost:3001/api/categories/edit', token, 'PUT', formData);
         if(response.ok) {
             useActualData();
             useAlert('success', 'Category has updated.');
@@ -62,7 +62,7 @@ const CategoryForm = (props) => {
             id: idRef.current.value,
         }
         
-        const response = await useFetch('http://localhost:3001/api/categories/delete', 'DELETE', formData);
+        const response = await useFetch('http://localhost:3001/api/categories/delete', token, 'DELETE', formData);
         if(response.ok) {
             useActualData();
             useAlert('success', 'Category has deleted.');
@@ -99,6 +99,7 @@ const CategoryForm = (props) => {
                     placeholder="Description"
                     ref={descriptionRef}
                     defaultValue={props.dataDescription}
+                    required
                 />
             </FloatingLabel>
             <Row className="d-flex justify-content-between px-2">

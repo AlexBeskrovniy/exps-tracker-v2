@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
+import { useAuthContext } from '../../providers/AuthProvider';
 import { useRecordsContext } from '../../providers/RecordsProvider';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
@@ -8,6 +9,7 @@ import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const RecordForm = (props) => {
+    const { token } = useAuthContext();
     const { useActualData } = useRecordsContext();
     const { categories } = useCategoriesContext();
     const { useAlert } = useAlertContext();
@@ -30,7 +32,7 @@ const RecordForm = (props) => {
             category: categoryRef.current.value,
             description: descriptionRef.current.value
         }
-        const response = await useFetch('http://localhost:3001/api/records/create', 'POST', formData);
+        const response = await useFetch('http://localhost:3001/api/records/create', token, 'POST', formData);
         if(response.ok) {
             useActualData();
             useAlert('success', 'New record has created.');
@@ -51,7 +53,7 @@ const RecordForm = (props) => {
             category: categoryRef.current.value,
             description: descriptionRef.current.value
         }
-        const response = await useFetch('http://localhost:3001/api/records/edit', 'PUT', formData);
+        const response = await useFetch('http://localhost:3001/api/records/edit', token, 'PUT', formData);
         if(response.ok) {
             useActualData();
             useAlert('success', 'Record has updated.');
@@ -67,7 +69,7 @@ const RecordForm = (props) => {
             id: idRef.current.value,
         }
 
-        const response = await useFetch('http://localhost:3001/api/records/delete', 'DELETE', formData);
+        const response = await useFetch('http://localhost:3001/api/records/delete', token, 'DELETE', formData);
         if(response.ok) {
             useActualData();
             useAlert('success', 'Record has deleted.');
@@ -137,6 +139,7 @@ const RecordForm = (props) => {
                     placeholder="Description"
                     ref={descriptionRef}
                     defaultValue={props.dataDescription}
+                    required
                 />
             </FloatingLabel>
             <Row className="px-2">
