@@ -9,8 +9,8 @@ import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const RecordForm = (props) => {
-    const { token } = useAuthContext();
-    const { useActualData } = useRecordsContext();
+    const { token, onLogOut } = useAuthContext();
+    const { useActualRecords } = useRecordsContext();
     const { categories } = useCategoriesContext();
     const { useAlert } = useAlertContext();
 
@@ -34,9 +34,12 @@ const RecordForm = (props) => {
         }
         const response = await useFetch('http://localhost:3001/api/records/create', token, 'POST', formData);
         if(response.ok) {
-            useActualData();
+            useActualRecords();
             useAlert('success', 'New record has created.');
         } else {
+            if (response.status === 401) {
+                onLogOut();
+            }
             useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
@@ -55,9 +58,12 @@ const RecordForm = (props) => {
         }
         const response = await useFetch('http://localhost:3001/api/records/edit', token, 'PUT', formData);
         if(response.ok) {
-            useActualData();
+            useActualRecords();
             useAlert('success', 'Record has updated.');
         } else {
+            if (response.status === 401) {
+                onLogOut();
+            }
             useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
@@ -71,9 +77,12 @@ const RecordForm = (props) => {
 
         const response = await useFetch('http://localhost:3001/api/records/delete', token, 'DELETE', formData);
         if(response.ok) {
-            useActualData();
+            useActualRecords();
             useAlert('success', 'Record has deleted.');
         } else {
+            if (response.status === 401) {
+                onLogOut();
+            }
             useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
@@ -115,7 +124,7 @@ const RecordForm = (props) => {
                 label="Choose the Category"
                 className="mb-3"
             >
-                    { categories.length && (
+                    { categories.length ? (
                     <Form.Select
                         name="category"
                         ref={categoryRef}
@@ -126,7 +135,15 @@ const RecordForm = (props) => {
                             <option key={index} value={category._id}>{category.name}</option>
                         ))}
                     </Form.Select>
-                ) }
+                ) : (
+                    <Form.Select
+                        name="category"
+                        ref={categoryRef}
+                        defaultValue=""
+                    >
+                        <option value="">No category</option>
+                    </Form.Select>
+                )}
             </FloatingLabel>
             <FloatingLabel
                 controlId="floatingTextarea"

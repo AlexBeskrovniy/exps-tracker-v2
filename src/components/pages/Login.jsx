@@ -36,6 +36,7 @@ const Login = () => {
             if (res.ok) {
                 console.log(data);
                 onLogIn(data);
+                setLoading(false);
                 navigate('/');
                 useAlert('success', `${data.user.name}, Welcome to your personal profile!`);
             }

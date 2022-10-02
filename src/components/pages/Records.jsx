@@ -14,7 +14,7 @@ const Records = () => {
 					<h2 className="page-title ms-2 mb-0">All Records</h2>
 				</div>
 
-				{ records.length !== 0 ?   (
+				{ records.length !== 0 ? (
 				<Row className="d-flex justify-content-center">
 					
 					<Card bg="dark" border="light" className="px-0">
@@ -41,7 +41,15 @@ const Records = () => {
 						</div>
 					</Card>
 				</Row>
-				) :<Spinner animation="border" variant="warning" className="position-absolute top-50 left-50" /> }
+				) : (
+					<Container className="d-flex align-items-center justify-content-center">
+						<div className="d-flex align-items-center justify-content-center position-absolute top-50 left-50">
+							<h2 className="page-title ms-2 mb-0">
+								Have not any records.
+							</h2>
+						</div>
+					</Container>
+				)}
 			</Container>	
 		</main>
 	   	

@@ -16,14 +16,14 @@ const RecordsProvider = ({ children }) => {
     const [records, setRecords] = useState(data);
     const [total, setTotal] = useState(totalSpent);
 
-    const useActualData = async () => {
+    const useActualRecords = async () => {
         const newData = await useFetch('http://localhost:3001/api/records', token);
         setRecords(newData.records);
         setTotal(newData.total);
     }
 
     return(
-        <RecordsContext.Provider value={{ records, total, useActualData }}>
+        <RecordsContext.Provider value={{ records, total, useActualRecords }}>
             { children }
         </RecordsContext.Provider>
     );

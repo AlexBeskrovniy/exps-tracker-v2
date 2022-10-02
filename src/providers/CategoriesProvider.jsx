@@ -14,13 +14,13 @@ const CategoriesProvider = ({ children }) => {
 
     const [categories, setCategories] = useState(data);
 
-    const useActualData = async () => {
+    const useActualCategories = async () => {
         const newData = await useFetch('http://localhost:3001/api/categories', token);
         setCategories(newData);
     }
 
     return(
-        <CategoriesContext.Provider value={{ categories, useActualData }}>
+        <CategoriesContext.Provider value={{ categories, useActualCategories }}>
             { children }
         </CategoriesContext.Provider>
     );

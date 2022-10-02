@@ -2,13 +2,15 @@ import { useRef, useState } from 'react';
 import { useFetch } from '../../Utils';
 import { useAuthContext } from '../../providers/AuthProvider';
 import { useCategoriesContext } from '../../providers/CategoriesProvider';
+import { useRecordsContext } from '../../providers/RecordsProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const CategoryForm = (props) => {
-    const { token } = useAuthContext();
-    const { useActualData } = useCategoriesContext();
+    const { token, onLogOut } = useAuthContext();
+    const { useActualCategories } = useCategoriesContext();
+    const { useActualRecords } = useRecordsContext();
     const { useAlert } = useAlertContext();
 
     const [loading, setLoading] = useState(false);
@@ -28,9 +30,12 @@ const CategoryForm = (props) => {
 
         const response = await useFetch('http://localhost:3001/api/categories/create', token, 'POST', formData);
         if(response.ok) {
-            await useActualData();
+            await useActualCategories();
             useAlert('success', 'New category has created.');
         } else {
+            if (response.status === 401) {
+                onLogOut();
+            }
             useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
@@ -48,9 +53,13 @@ const CategoryForm = (props) => {
         
         const response = await useFetch('http://localhost:3001/api/categories/edit', token, 'PUT', formData);
         if(response.ok) {
-            useActualData();
+            useActualCategories();
+            useActualRecords();
             useAlert('success', 'Category has updated.');
         } else {
+            if (response.status === 401) {
+                onLogOut();
+            }
             useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
@@ -64,9 +73,13 @@ const CategoryForm = (props) => {
         
         const response = await useFetch('http://localhost:3001/api/categories/delete', token, 'DELETE', formData);
         if(response.ok) {
-            useActualData();
+            useActualCategories();
+            useActualRecords();
             useAlert('success', 'Category has deleted.');
         } else {
+            if (response.status === 401) {
+                onLogOut();
+            }
             useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
         }
         props.handleClose();
