@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
-import { useCategoriesContext } from '../../providers/CategoriesProvider';
+import { useDataContext } from '../../providers/DataProvider';
 
 import ModalWrapper from '../modals/ModalWrapper';
 import CategoryForm from '../forms/CategoryForm';
@@ -13,7 +13,10 @@ const Categories = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 	
-	const { categories } = useCategoriesContext();
+	const {categories, useActualCategories } = useDataContext();
+	useEffect(() => {
+		useActualCategories();
+	}, []);
 	
     return (
         <main className="main text-center">
@@ -31,7 +34,7 @@ const Categories = () => {
                         handleClose={handleClose}
 					/>
 				</div>
-
+				
 				{categories.length ? (
 
 				<Row id="categoryWrapper" className="d-flex justify-content-start">

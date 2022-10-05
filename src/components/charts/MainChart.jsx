@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useRecordsContext } from '../../providers/RecordsProvider';
+import { useDataContext } from '../../providers/DataProvider';
 
 import {
     Chart as ChartJS,
@@ -23,7 +23,7 @@ import {
   );
 
 export const MainChart = () => {
-  const { records } = useRecordsContext();
+  const { records } = useDataContext();
 	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
 
   const daysCount = moment(moment().format('YYYY-MM')).daysInMonth();

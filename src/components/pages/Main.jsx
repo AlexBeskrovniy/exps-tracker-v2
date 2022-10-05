@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { useState } from 'react';
-import { useRecordsContext } from '../../providers/RecordsProvider';
+import { useState, useEffect } from 'react';
+import { useDataContext } from '../../providers/DataProvider';
 import { Container } from 'react-bootstrap';
 import { MainChart } from '../charts/MainChart';
 import { YearMainChart } from '../charts/YearMainChart';
@@ -14,7 +14,10 @@ const countSpents = (arr) => {
 }
 
 const Main = () => {
-	const { records } = useRecordsContext();
+	const { records, useActualRecords } = useDataContext();
+	useEffect(() => {
+		useActualRecords();
+	}, []);
 	
 	const thisMonthRecords = records.filter(record => record.createdAt > moment().startOf('month').toISOString());
 	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
@@ -49,7 +52,7 @@ const Main = () => {
 
     return (
         <main className="main text-center">
-			{records.length !== 0 ? (
+			{records.length ? (
 				<>
 					<Container>
 						<div className="d-flex flex-wrap align-items-center justify-content-center my-3">

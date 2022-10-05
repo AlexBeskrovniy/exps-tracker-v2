@@ -1,7 +1,7 @@
-import { useRecordsContext } from '../../providers/RecordsProvider';
+import { useDataContext } from '../../providers/DataProvider';
 
 const Total = () => {
-    const { total } = useRecordsContext();
+    const { total } = useDataContext();
 
     return (
         <div className="d-flex align-items-center justify-content-center mx-3">

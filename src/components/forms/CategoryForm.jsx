@@ -1,16 +1,14 @@
 import { useRef, useState } from 'react';
-import { useFetch } from '../../Utils';
+//import { useFetch } from '../../Utils';
 import { useAuthContext } from '../../providers/AuthProvider';
-import { useCategoriesContext } from '../../providers/CategoriesProvider';
-import { useRecordsContext } from '../../providers/RecordsProvider';
+import { useDataContext } from '../../providers/DataProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const CategoryForm = (props) => {
     const { token, onLogOut } = useAuthContext();
-    const { useActualCategories } = useCategoriesContext();
-    const { useActualRecords } = useRecordsContext();
+    const { useFetch, useActualRecords, useActualCategories} = useDataContext();
     const { useAlert } = useAlertContext();
 
     const [loading, setLoading] = useState(false);
@@ -33,10 +31,8 @@ const CategoryForm = (props) => {
             await useActualCategories();
             useAlert('success', 'New category has created.');
         } else {
-            if (response.status === 401) {
-                onLogOut();
-            }
-            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
+            const data = await response.json();
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText}) - ${data.message}`);
         }
         props.handleClose();
     }
@@ -57,10 +53,8 @@ const CategoryForm = (props) => {
             useActualRecords();
             useAlert('success', 'Category has updated.');
         } else {
-            if (response.status === 401) {
-                onLogOut();
-            }
-            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
+            const data = await response.json();
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText}) - ${data.message}`);
         }
         props.handleClose();
     }
@@ -77,10 +71,8 @@ const CategoryForm = (props) => {
             useActualRecords();
             useAlert('success', 'Category has deleted.');
         } else {
-            if (response.status === 401) {
-                onLogOut();
-            }
-            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
+            const data = await response.json();
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText}) - ${data.message}`);
         }
         props.handleClose();
     }

@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { useRecordsContext } from '../../providers/RecordsProvider';
-//import { useCategoriesContext } from '../../providers/CategoriesProvider';
+import { useDataContext } from '../../providers/DataProvider';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -8,7 +7,7 @@ import { Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const YearCategoriesChart = () =>{
-    const { records } = useRecordsContext();
+    const { records } = useDataContext();
 	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
     const finalInfo = () => {
         const result = thisYearRecords.reduce((accum, record) => {

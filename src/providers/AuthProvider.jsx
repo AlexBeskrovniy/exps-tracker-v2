@@ -29,7 +29,7 @@ const checkAuth = async () => {
 
 
 const userData = await checkAuth();
-console.log(userData);
+
 const AuthProvider = ({ children }) => {
 
     const [token, setToken] = useState(jwt);

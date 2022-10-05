@@ -1,17 +1,15 @@
 import moment from 'moment';
-import { useRef, useState } from 'react';
-import { useFetch } from '../../Utils';
+import { useRef, useState, useEffect } from 'react';
+//import { useFetch } from '../../Utils';
 import { useAuthContext } from '../../providers/AuthProvider';
-import { useRecordsContext } from '../../providers/RecordsProvider';
-import { useCategoriesContext } from '../../providers/CategoriesProvider';
+import { useDataContext } from '../../providers/DataProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const RecordForm = (props) => {
     const { token, onLogOut } = useAuthContext();
-    const { useActualRecords } = useRecordsContext();
-    const { categories } = useCategoriesContext();
+    const { categories, useFetch, useActualCategories, useActualRecords } = useDataContext();
     const { useAlert } = useAlertContext();
 
     const [loading, setLoading] = useState(false);
@@ -21,6 +19,10 @@ const RecordForm = (props) => {
     const categoryRef = useRef();
     const descriptionRef = useRef();
     const idRef = useRef();
+
+    useEffect(() => {
+		useActualCategories();
+	}, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,10 +39,8 @@ const RecordForm = (props) => {
             useActualRecords();
             useAlert('success', 'New record has created.');
         } else {
-            if (response.status === 401) {
-                onLogOut();
-            }
-            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
+            const data = await response.json();
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText}) - ${data.message}`);
         }
         props.handleClose();
     }
@@ -61,10 +61,8 @@ const RecordForm = (props) => {
             useActualRecords();
             useAlert('success', 'Record has updated.');
         } else {
-            if (response.status === 401) {
-                onLogOut();
-            }
-            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
+            const data = await response.json();
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText}) - ${data.message}`);
         }
         props.handleClose();
     }
@@ -80,10 +78,8 @@ const RecordForm = (props) => {
             useActualRecords();
             useAlert('success', 'Record has deleted.');
         } else {
-            if (response.status === 401) {
-                onLogOut();
-            }
-            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText})`);
+            const data = await response.json();
+            useAlert('danger', `Something went wrong... Error status: ${response.status}(${response.statusText}) - ${data.message}`);
         }
         props.handleClose();
     }

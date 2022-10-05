@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useRecordsContext } from '../../providers/RecordsProvider';
+import { useDataContext } from '../../providers/DataProvider';
 
 import {
     Chart as ChartJS,
@@ -24,7 +24,7 @@ import {
 
 
 export const YearMainChart = () => {
-  const { records } = useRecordsContext();
+  const { records } = useDataContext();
 	const thisYearRecords = records.filter(record => record.createdAt > moment().startOf('year').toISOString());
   
   const getMonths = () => {

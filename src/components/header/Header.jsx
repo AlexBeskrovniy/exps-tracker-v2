@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container, Dropdown } from 'react-bootstrap';
 import Logo from './Logo';
 import Nav from './Nav';
 import Total from './Total';
@@ -7,14 +7,21 @@ import ModalWrapper from '../modals/ModalWrapper';
 import RecordForm from '../forms/RecordForm';
 
 import { useAuthContext } from "../../providers/AuthProvider";
+import { useDataContext } from '../../providers/DataProvider';
 
 const Header = () => {
     const { user, onLogOut } = useAuthContext();
+    const { useClearData } = useDataContext();
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const logOutAndClearData = () => {
+        onLogOut();
+        useClearData();
+    }
 
     return (
         <header className="p-3 bg-dark text-white">
@@ -49,7 +56,7 @@ const Header = () => {
                                     <span>{ user.name }</span>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu variant="dark">
-                                    <Dropdown.Item onClick={onLogOut}>
+                                    <Dropdown.Item onClick={logOutAndClearData}>
                                         Log Out
                                     </Dropdown.Item>
                                 </Dropdown.Menu>

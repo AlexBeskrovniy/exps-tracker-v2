@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import AuthProvider from './providers/AuthProvider';
-import RecordsProvider from './providers/RecordsProvider';
-import CategoriesProvider from './providers/CategoriesProvider';
+import DataProvider from './providers/DataProvider';
 import AlertProvider from './providers/AlertProvider';
 import ProtectedRoute from './providers/ProtectedRoute';
 
@@ -19,37 +18,35 @@ import AlertMessage from './components/alerts/AlertMessage';
 const App = () => {
     return (
         <AuthProvider>
-            <RecordsProvider>
-                <CategoriesProvider>
-                    <BrowserRouter>
-                        <AlertProvider>
-                            <AlertMessage />
-                            <Header />
-                            <Routes>
-                                <Route path="/" element={
-                                    <ProtectedRoute>
-                                        <Main />
-                                    </ProtectedRoute>
-                                } />
-                                <Route path="/registration" element={<Registration />} />
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/categories" element={
-                                    <ProtectedRoute>
-                                        <Categories />
-                                    </ProtectedRoute>
-                                } />
-                                <Route path="/records" element={
-                                    <ProtectedRoute>
-                                        <Records />
-                                    </ProtectedRoute>
-                                } />
-                                <Route path="*" element={<PageNotFound />}/>
-                            </Routes>
-                            <Footer />
-                        </AlertProvider>
-                    </BrowserRouter>
-                </CategoriesProvider>
-            </RecordsProvider>
+            <BrowserRouter>
+                <AlertProvider>
+                    <DataProvider>
+                        <AlertMessage />
+                        <Header />
+                        <Routes>
+                            <Route path="/" element={
+                                <ProtectedRoute>
+                                    <Main />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/registration" element={<Registration />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/categories" element={
+                                <ProtectedRoute>
+                                    <Categories />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/records" element={
+                                <ProtectedRoute>
+                                    <Records />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="*" element={<PageNotFound />}/>
+                        </Routes>
+                        <Footer />
+                    </DataProvider>
+                </AlertProvider>
+            </BrowserRouter>
         </AuthProvider>
     );
 }

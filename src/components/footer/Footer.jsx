@@ -34,7 +34,7 @@ const Footer = () => {
             <Container>
                 <div className="d-flex flex-wrap align-items-center justify-content-around pt-3">
                     <div>
-                        <p className="text-white mb-0">Expenses Tracker version: 2.0.0.</p>
+                        <p className="text-white mb-0">Expenses Tracker version: 2.0.0</p>
                     </div>
                     <div>
                         <p className="text-white mb-0">
