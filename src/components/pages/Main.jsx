@@ -15,6 +15,7 @@ const countSpents = (arr) => {
 
 const Main = () => {
 	const { records, useActualRecords } = useDataContext();
+	
 	useEffect(() => {
 		useActualRecords();
 	}, []);
@@ -41,6 +42,10 @@ const Main = () => {
 			setChartTotal(thisMonthSpents)
 		)
 	};
+
+	useEffect(() => {
+		useActive(chart, active.activeItem);
+	}, [records]);
 
 	const getClassName = (id) => {
 		if (id === active.activeItem) {

@@ -1,5 +1,5 @@
 import { useDataContext } from '../../providers/DataProvider';
-import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import RecordCard from './RecordCard';
 
 

@@ -39,6 +39,7 @@ const RecordCard = (props) => {
 						btnTitle="Edit record"
                         btnVariant="warning"
                         btnSize="md"
+                        btnClassList="mt-2 mt-lg-0"
 						modalTitle="Edit this Record"
                         show={show}
                         handleShow={handleShow}

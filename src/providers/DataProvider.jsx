@@ -11,13 +11,10 @@ export const useDataContext = () => {
 const DataProvider = ({ children }) => {
     const { token, user, onLogOut } = useAuthContext();
     const { useAlert } = useAlertContext();
-    const dataCategories = user ? user.categories : [];
-    const dataRecords = user ? user.records : [];
-    const totalSpent = user ? user.total : 0;
 
-    const [categories, setCategories] = useState(dataCategories);
-    const [records, setRecords] = useState(dataRecords);
-    const [total, setTotal] = useState(totalSpent);
+    const [categories, setCategories] = useState(user ? user.categories : []);
+    const [records, setRecords] = useState(user ? user.records : []);
+    const [total, setTotal] = useState(user ? user.total : 0);
 
     const useClearData = () => {
         setRecords([]);

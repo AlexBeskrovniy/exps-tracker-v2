@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { useRef, useState, useEffect } from 'react';
-//import { useFetch } from '../../Utils';
 import { useAuthContext } from '../../providers/AuthProvider';
 import { useDataContext } from '../../providers/DataProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
@@ -8,7 +7,7 @@ import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const RecordForm = (props) => {
-    const { token, onLogOut } = useAuthContext();
+    const { token } = useAuthContext();
     const { categories, useFetch, useActualCategories, useActualRecords } = useDataContext();
     const { useAlert } = useAlertContext();
 

@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-//import { useFetch } from '../../Utils';
 import { useAuthContext } from '../../providers/AuthProvider';
 import { useDataContext } from '../../providers/DataProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
@@ -7,7 +6,7 @@ import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
 const CategoryForm = (props) => {
-    const { token, onLogOut } = useAuthContext();
+    const { token } = useAuthContext();
     const { useFetch, useActualRecords, useActualCategories} = useDataContext();
     const { useAlert } = useAlertContext();
 

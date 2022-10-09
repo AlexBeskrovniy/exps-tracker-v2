@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import { useDataContext } from '../../providers/DataProvider';
 
@@ -22,7 +22,7 @@ const Categories = () => {
         <main className="main text-center">
 			<Container>
 				<div className="d-flex flex-wrap align-items-center justify-content-center justify-content-sm-between py-5">
-					<h2 className="page-title mx-2 mb-0">List of the Categories</h2>
+					<h2 className="page-title mx-2 mb-3 mb-lg-0">List of the Categories</h2>
 					<ModalWrapper 
 						form={<CategoryForm type="Submit" handleClose={handleClose} />}
 						btnTitle="Create Category"
