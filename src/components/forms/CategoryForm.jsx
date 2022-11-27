@@ -5,6 +5,8 @@ import { useAlertContext } from "../../providers/AlertProvider";
 import { Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 import AlertConfirm from '../alerts/AlertConfirm';
 
+import { HOST } from '../../config.js';
+
 const CategoryForm = (props) => {
     const { token } = useAuthContext();
     const { useFetch, useActualRecords, useActualCategories} = useDataContext();
@@ -25,7 +27,7 @@ const CategoryForm = (props) => {
             description: descriptionRef.current.value
         }
 
-        const response = await useFetch('http://localhost:3001/api/categories/create', token, 'POST', formData);
+        const response = await useFetch(`http://${HOST}:3001/api/categories/create`, token, 'POST', formData);
         if(response.ok) {
             await useActualCategories();
             useAlert('success', 'New category has created.');
@@ -46,7 +48,7 @@ const CategoryForm = (props) => {
             description: descriptionRef.current.value
         }
         
-        const response = await useFetch('http://localhost:3001/api/categories/edit', token, 'PUT', formData);
+        const response = await useFetch(`http://${HOST}:3001/api/categories/edit`, token, 'PUT', formData);
         if(response.ok) {
             useActualCategories();
             useActualRecords();
@@ -64,7 +66,7 @@ const CategoryForm = (props) => {
             id: idRef.current.value,
         }
         
-        const response = await useFetch('http://localhost:3001/api/categories/delete', token, 'DELETE', formData);
+        const response = await useFetch(`http://${HOST}:3001/api/categories/delete`, token, 'DELETE', formData);
         if(response.ok) {
             useActualCategories();
             useActualRecords();

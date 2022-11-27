@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-
+import { HOST } from '../config.js';
 const AuthContext = React.createContext();
 
 export const useAuthContext = () => {
@@ -10,7 +10,7 @@ const jwt = localStorage.getItem('jwt');
 console.log(jwt);
 const checkAuth = async () => {
     try{
-        const res = jwt && await fetch('http://localhost:3001/api/user', {
+        const res = jwt && await fetch(`http://${HOST}:3001/api/user`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${jwt}`,

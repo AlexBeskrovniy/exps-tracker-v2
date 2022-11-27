@@ -4,6 +4,8 @@ import { useAuthContext } from '../../providers/AuthProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
 import { Container, Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 
+import { HOST } from '../../config.js';
+
 const Login = () => {
     const navigate = useNavigate();
     const { onLogIn } = useAuthContext();
@@ -25,7 +27,7 @@ const Login = () => {
         }
         console.log(formData);
         try{
-            const res = await fetch('http://localhost:3001/api/user/login', {
+            const res = await fetch(`http://${HOST}:3001/api/user/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
