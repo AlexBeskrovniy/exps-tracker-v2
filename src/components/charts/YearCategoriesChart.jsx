@@ -36,7 +36,7 @@ export const YearCategoriesChart = () =>{
         plugins: {
             title: {
                 display: true,
-                text: 'This Month Spents By Categories'
+                text: 'This Year Spents By Categories'
             },
             legend: {
                 position: 'bottom',

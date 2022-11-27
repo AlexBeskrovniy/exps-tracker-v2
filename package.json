@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "start": "node server.mjs"
+    "start": "webpack --mode production && node server.mjs"
   },
   "repository": {
     "type": "git",
