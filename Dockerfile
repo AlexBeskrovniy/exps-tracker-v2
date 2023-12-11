@@ -1,6 +1,6 @@
 FROM node:18
 WORKDIR /app
 COPY . /app
-RUN npm install
+RUN RUN npm ci
 EXPOSE 8080
 CMD ["npm", "start"]
