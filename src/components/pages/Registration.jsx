@@ -4,7 +4,7 @@ import { useAuthContext } from '../../providers/AuthProvider';
 import { useAlertContext } from "../../providers/AlertProvider";
 import { Container, Row, Form, Button, FloatingLabel, Spinner } from 'react-bootstrap';
 
-import { HOST } from '../../config.js';
+import { API_URL } from '../../config.js';
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Registration = () => {
         }
         console.log(formData);
         try{
-            const res = await fetch(`http://${HOST}:3001/api/user/create`, {
+            const res = await fetch(`${API_URL}/api/user/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { useAuthContext } from './AuthProvider';
 import { useAlertContext } from './AlertProvider';
 
-import { HOST } from '../config.js';
+import { API_URL } from '../config.js';
 
 const DataContext = React.createContext();
 
@@ -49,12 +49,12 @@ const DataProvider = ({ children }) => {
     }
 
     const useActualCategories = async () => {
-        const newData = await useFetch(`http://${HOST}:3001/api/categories`, token);
+        const newData = await useFetch(`${API_URL}/api/categories`, token);
         setCategories(newData);
     }
 
     const useActualRecords = async () => {
-        const newData = await useFetch(`http://${HOST}:3001/api/records`, token);
+        const newData = await useFetch(`${API_URL}/api/records`, token);
         setRecords(newData.records);
         setTotal(newData.total);
     }
