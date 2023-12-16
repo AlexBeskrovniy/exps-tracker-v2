@@ -6,6 +6,12 @@ import RecordCard from './RecordCard';
 const Records = () => {
 	const { records } = useDataContext();
 
+	if (records.length > 1) {
+		records.sort((a, b) => {
+			return Date.parse(a.createdAt) - Date.parse(b.createdAt);
+		});
+	}
+
     return (
 
 	   <main className="main text-center">
@@ -28,7 +34,7 @@ const Records = () => {
 							</Row>
 						</Card.Header>
 						<div id="recordWrapper">
-							{records.map((record, index) => (
+							{records.reverse().map((record, index) => (
 								<RecordCard
 									key={index}
 									createdAt={record.createdAt}
