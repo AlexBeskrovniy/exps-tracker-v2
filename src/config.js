@@ -1,2 +1,2 @@
-export const API_URL = "https://expstrackerv2server1-awtv6vn8.b4a.run";
+export const API_URL = "https://exps-tracker-v2-server-f17be289f684.herokuapp.com";
 // export const API_URL = "http://localhost:3001"
